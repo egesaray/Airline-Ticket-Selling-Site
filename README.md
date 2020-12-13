@@ -22,4 +22,4 @@ port = 3306          (myqsl için default)
   
   6- serverı çalıştırmak önizleme yapmak veya geriye kalan diğer işlemler için gerekli olan komut istemi django kodları için django notes.txt ' e bakın
   
-  
+  7- isikdb'nin erken safhalarda paylaşılmasına gerek yoktur. içinde test elemanları hariç bir veri barındırmayacağı için django ile migrate yaparak tabloları oluşturup çalışılmaya devam edilebilir.
