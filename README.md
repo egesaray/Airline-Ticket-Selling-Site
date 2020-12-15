@@ -1,5 +1,9 @@
 # SOFT3101_G4
 
+Grubumuzla alacağımız karar sonrası tüm dosyalar düzenlenecektir ve zipten çıkarılacaktır.
+
+
+
   1- Daha sağlıklı bir çalışma ortamı ve uyumluluk sorunu olmaması için isikexpressVENV dosyasını paylaşıyoruz. Bu virtual environment dosyasını masaüstüne indirdiğimizi varsayalım. Pycharm ile geliştirmelerimizi yaparken interpreter olarak "isikexpressVENV" i seçtiğimize emin olalım
 
   2- Asıl dosyaları "isikexpress" masaüstüne indirdiğimizi varsayalım.
