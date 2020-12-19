@@ -1,0 +1,165 @@
+
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Işık Express</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
+   <link rel="stylesheet" id="ecommerce.css-css"
+         href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/css/compiled-ecommerce-4.18.0.min.css?ver=4.18.0"
+         type="text/css" media="all">
+
+
+</head>
+
+<style>
+.first-info{
+    background-image: url( '/static/images/plane1.jpg' ) ;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+.button {
+  background-color: #f43b1e;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 30px;
+  margin: 4px 2px;
+  opacity: 0.8;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {opacity: 1}
+
+div.transbox {
+  margin: 200px;
+  background-color: #ffffff;
+  border:  solid rgba(0, 0, 0, 0.3);
+  opacity: 0.4;
+}
+
+div.transbox p {
+  margin: 5%;
+  font-weight: bold;
+  color: #000000;
+}
+
+</style>
+
+<body>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+                <a class="navbar-brand" href="/"><img src="/static/images/logouçak.png" style="height: 64px; width: 64px">
+                <a class="navbar-brand" href="/">Işık Express</a>
+                </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto" style="margin-left: 67% !important;">
+                        <li class="nav-item active">
+                            <a class="nav-link" style="background-color: rgb(33 33 33);" href="/aboutus">About Us<span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contactus">Contact Us <span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                    <a href="/login" class="btn btn-warning login-button">Login</a>
+                </div>
+            </nav>
+
+
+<div class="row first-info">
+   <div class="transbox">
+       <p style="text-align: center" >About Us</p>
+        <p style="text-align: center" >Lorem ipsum dolor sit amet sit veroeros sed amet
+            blandit consequat veroeros lorem blandit adipiscing et feugiat phasellus tempus
+            dolore ipsum lorem dolore.Lorem ipsum dolor sit amet sit veroeros sed amet
+            blandit consequat veroeros lorem blandit adipiscing et feugiat phasellus tempus
+            dolore ipsum lorem dolore.Lorem ipsum dolor sit amet sit veroeros sed amet
+            blandit consequat veroeros lorem blandit adipiscing et feugiat phasellus tempus
+            dolore ipsum lorem dolore.</p>
+</div>
+</div>
+
+
+
+    <section id="footer" style="background-color: black">
+    <div class="container">
+        <div class="row">
+            <div class="col-4 col-6-medium col-12-small">
+                <section>
+                    <header>
+                        <h2>Tempus consequat</h2>
+                    </header>
+                    <ul class="divided">
+                        <li><a href="#">Lorem ipsum dolor sit amet sit veroeros</a></li>
+                        <li><a href="#">Sed et blandit consequat sed tlorem blandit</a></li>
+                        <li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
+                        <li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
+                    </ul>
+                </section>
+            </div>
+            <div class="col-4 col-6-medium col-12-small">
+                <section>
+                    <header>
+                        <h2>Ipsum et phasellus</h2>
+                    </header>
+                    <ul class="divided">
+                        <li><a href="#">Lorem ipsum dolor sit amet sit veroeros</a></li>
+                        <li><a href="#">Sed et blandit consequat sed tlorem blandit</a></li>
+                        <li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
+                        <li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
+                    </ul>
+                </section>
+            </div>
+            <div class="col-4 col-12-medium">
+                <section>
+                    <header>
+                        <h2>Vitae tempor lorem</h2>
+                    </header>
+                    <ul class="social">
+                        <li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
+                        <li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
+                        <li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
+                    </ul>
+                    <ul class="contact">
+                        <li>
+                            <h3>Address</h3>
+                            <p>
+                                Untitled Incorporated<br/>
+                                1234 Somewhere Road Suite<br/>
+                                Nashville, TN 00000-0000
+                            </p>
+                        </li>
+                        <li>
+                            <h3>Mail</h3>
+                            <p><a href="#">someone@untitled.tld</a></p>
+                        </li>
+                        <li>
+                            <h3>Phone</h3>
+                            <p>(800) 000-0000</p>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <div class="col-12">
+                <!-- Copyright -->
+                <div id="copyright">
+                    <ul class="links">
+                        <li>&copy; All rights reserved Işık Express.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
