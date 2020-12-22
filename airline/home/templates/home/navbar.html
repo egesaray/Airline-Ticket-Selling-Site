@@ -1,3 +1,60 @@
+{% load static %}
 {% block content %}
-navbar
+<head>
+    <title>Navbar</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" style="height: 64px; width: 64px"></a>
+                <a class="navbar-brand" href="{% url 'home' %}">Işık Express</a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto" style="margin-left: 70% !important;">
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'checkin' %}">Check-in <span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'Feedback' %}">Give Feedback <span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                    <div class="form-inline my-2 my-lg-2">
+
+                        <ul class="navbar-nav profile-menu-drop-down">
+                                <li class="nav-item dropdown active">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                       role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account
+                                    </a>
+                                    <div class="dropdown-menu custom-dropdown" style="z-index: 2222222;" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="{% url 'myflights' %}">My Flights</a>
+                                        <a class="dropdown-item" href="{% url 'changeEmail' %}">Change Email</a>
+                                        <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
+                                        <a class="dropdown-item" href="{% url 'creditcards' %}">My Credit Cards</a>
+
+                                        <a href="{% url 'logout' %}" id="logout" class="btn btn-warning dropdown-item">Logout</a>
+                                    </div>
+                                </li>
+
+                        </ul>
+
+
+                    </div>
+                </div>
+            </nav>
+
+</body>
 {% endblock %}

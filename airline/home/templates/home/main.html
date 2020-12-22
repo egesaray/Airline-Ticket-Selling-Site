@@ -1,12 +1,14 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Işık Express</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
    <link rel="stylesheet" id="ecommerce.css-css"
          href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/css/compiled-ecommerce-4.18.0.min.css?ver=4.18.0"
          type="text/css" media="all">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
+
 
 
 
@@ -18,45 +20,67 @@
     background-size: cover;
     background-repeat: no-repeat;
 
+
 }
 .button {
-  background-color: #f43b1e;
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-align: center;
-  font-size: 30px;
-  margin: 4px 2px;
-  opacity: 0.8;
-  transition: 0.3s;
   display: inline-block;
-  text-decoration: none;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
   cursor: pointer;
+  margin: 5px;
+}
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
 }
 
-.button:hover {opacity: 1}
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
 
 </style>
 
 <body>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
-                <a class="navbar-brand" href="/"><img src="/static/images/logouçak.png" style="height: 64px; width: 64px">
-                <a class="navbar-brand" href="/">Işık Express</a>
+                <a class="navbar-brand" href="/"><img src="/static/images/logo.png" style="height: 70px; width: 70px">
+                <a class="navbar-brand"  href="/"><font size="5">Işık Express</font></a>
+
+
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto" style="margin-left: 85% !important;">
-                        <a href="/login" class="btn btn-warning login-button">Login</a>
+                        <a href="{% url 'login' %}" class="btn btn-warning login-button"><font size="3">Login</font></a>
                     </ul>
                 </div>
             </nav>
 
 
 <div class="row first-info">
-    <div class="row" style=" width: 15%; height: 150px;margin: auto;margin-top: 20px">
+    <div class="row" style=" width: 17%; height: 150px;margin: auto;margin-top: 70px">
 
-    <a href="/register">
-        <button class="button">Register</button>
-    </a>
+    <a href="/register"><button class="button" style="vertical-align:middle"><span>Register</span></button></a>
 
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -64,50 +88,7 @@
 </div>
 
 <!-- Footer -->
-            <footer class="section footer-classic context-dark bg-image" style="background: #000000;">
-                <br>
-        <div class="container">
-          <div class="row row-30">
-            <div class="col-md-4 col-xl-5">
-              <div class="pr-xl-4"><a class="brand" href="/"><img src="/static/images/logouçak.png" alt="" width="64" height="64" s></a>
-                <p>We are a global company, dedicated to the best and comfortable travels for every person.</p>
-                <!-- Rights-->
-                <p class="rights"><span>©  </span><span class="copyright-year">2020</span><span> </span><span>Işık Express</span><span>. </span><span>All Rights Reserved.</span></p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <h5>Contacts</h5>
-              <dl class="contact-list">
-                <dt>Address:</dt>
-                <dd>Meşrutiyet, Işık Ünv., 34980 Şile/İstanbul</dd>
-              </dl>
-              <dl class="contact-list">
-                <dt>Email:</dt>
-                <dd>info@isikun.edu.tr</dd>
-              </dl>
-              <dl class="contact-list">
-                <dt>Phone:</dt>
-                <dd>444 07 99</dd>
-              </dl>
-            </div>
-            <div class="col-md-4 col-xl-3">
-              <h5>Links</h5>
-              <ul class="nav-list">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contacts</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="row no-gutters social-container">
-          <div class="col"><a class="social-inner" href="https://tr-tr.facebook.com/isikuniversitesi"><span class="icon mdi mdi-facebook"></span><span>Facebook</span></a></div>
-          <div class="col"><a class="social-inner" href="https://www.instagram.com/isikuniversitesi"><span class="icon mdi mdi-instagram"></span><span>instagram</span></a></div>
-          <div class="col"><a class="social-inner" href="https://twitter.com/FMVIsikUniv?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><span class="icon mdi mdi-twitter"></span><span>twitter</span></a></div>
-
-        </div>
-      </footer>
-
-	<!-- ./Footer -->
+           {% include 'home/footer.html' %}
 
 </body>
 </html>
