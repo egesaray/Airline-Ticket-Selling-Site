@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<!--Anzel Öztürk-->
+
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Flights</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/myflights.css">
+</head>
+
+<body class="first-info">
+{% include 'home/navbar.html' %}
+<section>
+<div class="container">
+<div class="row" style="margin:200px auto"  >
+		<div class="row justify-content-center">
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="flight">
+                    <div class="ico-flight">
+                        <span class="iconfont fa-calendar fa" style="margin-left:35%"></span>
+                    </div>
+                    <div class="text-flight center">
+                        <h2 class="fonts-style ie-bold type-title display-title"><span>New Flight</span></h2>
+                        <p class="fonts-style text1 ie-text display-small-title">Click for ticket information.</p>
+
+                    </div>
+                    <a href="ticket.html"><b style='font-size:15px;'>&#10006;Cancel Ticket</b></a>
+                </div>
+
+            </div>
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="flight">
+                    <div class="ico-flight">
+
+                        <span class="iconfont fa-calendar fa"></span>
+                    </div>
+                    <div class="text-flight center">
+                             <h2 class="fonts-style ie-bold type-title display-title"><span>Past Flight(1)</span></h2>
+                        </h2>
+                        <p class="fonts-style text1 ie-text display-small-title">Click for the ticket information.</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="flight">
+                    <div class="ico-flight">
+
+                        <span class="iconfont fa-calendar fa"></span>
+                    </div>
+                    <div class="text-flight center">
+                             <h2 class="fonts-style ie-bold type-title display-title"><span>Past Flight(2)</span></h2>
+                        </h2>
+                        <p class="fonts-style text1 ie-text display-small-title">Click for the ticket information.</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6 mbr-col-md-10">
+                <div class="flight">
+                    <div class="ico-flight">
+                        <span class="iconfont fa-calendar fa"></span>
+                    </div>
+                    <div class="text-flight center">
+                        <h2 class="fonts-style ie-bold type-title display-title"><span>Past Flight(3)</span></h2>
+                        <p class="fonts-style text1 ie-text display-small-title">Click for the ticket information.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</div>
+</div>>
+</section>
+{% include 'home/footer.html' %}
+</body>
+{% endblock %}
+</html>
