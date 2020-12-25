@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<!--Anzel Öztürk-->
+
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose Class</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/chooseclass.css">
+</head>
+
+<body class="first-info">
+{% include 'home/navbar.html' %}
+ <div class="container class ">
+        <div class="container" style="margin-left: -10%">
+          <div class="row blog">
+            <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-4" >
+                        <div class="item-box-blog" style="margin:-200px auto"  >
+                          <div class="item-box-blog-image">
+                            <figure> <img src="/static/images/economy-class.png" > </figure>
+                          </div>
+                          <div class="item-box-blog-body">
+                            <div class="item-box-blog-heading">
+                                <h3><b>Economy Class</b></h3>
+                              </a>
+                            </div>
+                             <div class="item-box-blog-text" style="background-color:#ffefd5">
+                               <p><i>The distance between the seats is small and the seats are not wide.But it is ideal for short-term flights.</i><p>
+                             </div>
+
+                            <div class="btn"> <a href="/checkin" class="btn bg-blue-ui white read">Select</a> </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4" >
+                        <div class="item-box-blog" style="margin:-200px auto">
+                          <div class="item-box-blog-image">
+                            <div class="item-box-blog-cost bg-blue-ui white"> <span class="cost">+29.99$</span> </div>
+                            <figure><img src="/static/images/business-class.png" >  </figure>
+                          </div>
+                          <div class="item-box-blog-body">
+                            <div class="item-box-blog-heading">
+                                <h3><b>Business Class</b></h3>
+                              </a>
+                            </div>
+                            <div class="item-box-blog-text" style="background-color:#ffefd5">
+                               <p><i>It offers a fully reclining seat, a personalized reading lamp, plug, food and drink throughout the trip</i><p>
+                             </div>
+                            <div class="btn"> <a href="/checkin" class="btn bg-blue-ui white read">Select</a> </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4" >
+                        <div class="item-box-blog" style="margin:-200px auto">
+                          <div class="item-box-blog-image">
+
+                            <div class="item-box-blog-cost bg-blue-ui white"> <span class="cost">+59.99$</span> </div>
+                            <figure><img src="/static/images/first-class.png" ></figure>
+                          </div>
+                          <div class="item-box-blog-body">
+                            <div class="item-box-blog-heading">
+                                <h3><b>First Class</b></h3>
+                              </a>
+                            </div>
+                            <div class="item-box-blog-text" style="background-color:#ffefd5">
+                              <p><i>It offers unlimited services such as beds,bathrooms,delicious food and treats from each other and television.</i><p>
+                             </div>
+                            <div class="btn"> <a href="/checkin"  class="btn bg-blue-ui white read">Select</a></div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+           </div>
+    </div>
+
+&nbsp
+{% include 'home/footer.html' %}
+</body>
+{% endblock %}
+</html>
