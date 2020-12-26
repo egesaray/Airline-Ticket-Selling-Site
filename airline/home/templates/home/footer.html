@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+{% block content %}
+<!--Seray Şimşek-->
 <head>
     <meta charset="UTF-8">
     <title>Footer</title>
@@ -35,8 +36,8 @@
             <div class="col-md-4 col-xl-3">
               <h5>Links</h5>
               <ul class="nav-list">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contacts</a></li>
+                <li><a href="{% url 'aboutus' %}">About</a></li>
+                <li><a href="{% url 'Feedback' %}">Contacts</a></li>
               </ul>
             </div>
           </div>
@@ -51,4 +52,5 @@
 
 	<!-- ./Footer -->
 </body>
-</html>
+
+{% endblock %}

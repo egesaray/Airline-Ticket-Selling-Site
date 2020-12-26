@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-
+{% extends 'home/main.html' %}
 <!--Anzel Öztürk-->
-
 {% load static %}
 {% block content %}
 <html lang="en">
@@ -22,7 +20,6 @@
 }
 </style>
 <body class="first-info">
-{% include 'home/navbar.html' %}
 <div class="container"  style="margin-left: 33.5% !important;" ;>
 <br> <p style="margin-right:5% "><b>Payment Form</b></p>
 
@@ -119,7 +116,5 @@
 
 </div>
 &nbsp
-{% include 'home/footer.html' %}
 </body>
 {% endblock %}
-</html>
