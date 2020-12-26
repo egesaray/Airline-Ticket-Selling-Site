@@ -1,13 +1,11 @@
 {% load static %}
 {% block content %}
-
-<!------ Include the above in your HEAD tag ---------->
-
+<!--Seray Şimşek-->
 <html lang="en">
     <head>
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- Website CSS style -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -18,106 +16,11 @@
 		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/background.css' %}">
 
 		<title>Register</title>
 	</head>
-    <style>
-
-#playground-container {
-    height: 500px;
-    overflow: hidden !important;
-    -webkit-overflow-scrolling: touch;
-}
-.main{
- 	margin:50px 15px;
-}
-
-h1.title {
-	font-size: 50px;
-	font-family: 'Passion One', cursive;
-	font-weight: 400;
-}
-
-hr{
-	width: 10%;
-	color: #fff;
-}
-
-.form-group{
-	margin-bottom: 15px;
-}
-
-label{
-	margin-bottom: 15px;
-}
-
-input,
-input::-webkit-input-placeholder {
-    font-size: 11px;
-    padding-top: 3px;
-}
-
-.main-login{
- 	background-color: #fff;
-    /* shadows and rounded borders */
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-
-}
-.form-control {
-    height: auto!important;
-    padding: 8px 12px !important;
-}
-.input-group {
-    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
-    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
-    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
-}
-#button {
-    width: 100%;
-	background: #c0392b !important;
-	color: white !important;
-
-}
-.main-center{
- 	margin-top: 30px;
- 	margin: 0 auto;
- 	max-width: 400px;
-    padding: 10px 40px;
-	background:#f39c12;
-	    color: #FFF;
-    text-shadow: none;
-	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
-   -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
-    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
-
-}
-span.input-group-addon i {
-    color: #c0392b;
-    font-size: 17px;
-}
-
-.login-button{
-	margin-top: 5px;
-}
-
-.login-register{
-	font-size: 11px;
-	text-align: center;
-}
-
-.first-info{
-    background-image: url( '/static/images/plane1.jpg' ) ;
-    background-size: cover;
-    background-repeat: no-repeat;
-
-	}
-
-    </style>
 
 	<body class="first-info">
 		<div class="container">
@@ -178,7 +81,7 @@ span.input-group-addon i {
 						</div>
 
 						<div class="form-group ">
-							<a href="/homepage" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Register</a> <!-- içerisinde    target="_blank"    vardı butona tıklandıktan sonra yeni pencerede açmasına yol açıyordu kaldırıldı -->
+							<a href="/homepage" target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Register</a>
 						</div>
 
 					</form>

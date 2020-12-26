@@ -1,5 +1,7 @@
+{% extends 'home/main.html' %}
 {% load static %}
 {% block content %}
+<!--Seray Şimşek-->
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
@@ -8,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 
 </head>
 <style>
@@ -109,7 +110,6 @@ select:focus {
 </style>
 
 <body class="first-info" >
-{% include 'home/navbar.html' %}
 <!--Card-->
 <div class="card shadow mb-5 bg-white rounded" style=" margin-top: 100px; " class="first-info" >
     <!--Card-Body-->
@@ -184,10 +184,5 @@ select:focus {
 
 </div>
 <br><br><br><br>
-
-<!-- Footer -->
-          {% include 'home/footer.html' %}
-<!-- EndFooter -->
-
 </body>
 {% endblock %}

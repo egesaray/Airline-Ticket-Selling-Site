@@ -25,4 +25,6 @@ urlpatterns = [
     path('chooseclass/', views.chooseclass, name="chooseclass"),
     path('forgotPassword/', views.forgotPassword, name="forgotPassword"),
 
+
+
    ]
