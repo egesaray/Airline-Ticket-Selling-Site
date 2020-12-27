@@ -1,0 +1,39 @@
+.top-bar {
+    background: #323232;
+    color: #fff;
+    font-size: 0.9rem;
+    padding: 15px 0;
+}
+
+.top-bar .contact-info {
+    margin-right: 20px;
+}
+
+.top-bar ul {
+    margin-bottom: 0;
+}
+
+.top-bar .contact-info a {
+    font-size: 0.8rem;
+}
+
+.top-bar ul {
+    margin-bottom: 0;
+}
+
+.top-bar a.login-btn i, .top-bar a.signup-btn i {
+    margin-right: 10px;
+}
+
+a:focus, a:hover {
+    color: #348e7b;
+}
+.top-bar a.login-btn, .top-bar a.signup-btn {
+    color: #eee;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none !important;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-right: 10px;
+}
