@@ -144,14 +144,3 @@ class Airport_Flight(models.Model):
     Flightpnr = models.ForeignKey(Flight, null=True, on_delete=models.SET_NULL)
 
 
-
-
-
-
-
-
-
-
-
-
-        return f'{self.comment_content} by {self.commenter}'
