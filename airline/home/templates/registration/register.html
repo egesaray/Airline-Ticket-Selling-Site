@@ -1,0 +1,34 @@
+{% load static %}
+{% block content %}
+<!--Seray Şimşek-->
+<html lang="en">
+    <head>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/background.css' %}">
+
+		<title>Register</title>
+	</head>
+<style>
+
+
+</style>
+	<body class="first-info">
+  <div class="container" >
+        <div class="row main" >
+            <div class="main login main-center" >
+<center><p><font face="tahoma" size="4" color="maroon"><b>SIGN UP FOR AN AMAZING TRAVEL EXPERIENCE</b></font></p></center>
+
+            <div class="card-body"  >
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+
+                </form>
+            </div>
+             </div>
+        </div>
+  </div>
+    </body>
+</html>
+{% endblock %}

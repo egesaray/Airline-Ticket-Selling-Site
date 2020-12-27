@@ -2,18 +2,21 @@ from django.urls import path
 from . import views
 from airline import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [
     # leave as empty string fo base url
     path('', views.home, name="home"),
-    path('login/', views.login, name="login"),
+    path('login/', LoginView.as_view(), name="login"),
     path('register/', views.register, name="register"),
+    path('logout/', LogoutView.as_view(next_page='home'), name="logout"),
+
     path('homepage/', views.homepage, name="homepage"),
     path('changeEmail/', views.changeEmail, name="changeEmail"),
     path('changePassword/', views.changePassword, name="changePassword"),
     path('creditcards/', views.creditcards, name="creditcards"),
     path('footer/', views.footer, name="footer"),
     path('header/', views.header, name="header"),
-    path('logout/', views.logout, name="logout"),
+
     path('myflights/', views.myflights, name="myflights"),
     path('ticket/', views.ticket, name="ticket"),
     path('aboutus/', views.aboutus, name="aboutus"),

@@ -1,15 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
     return render(request, 'home/home.html')
-def login(request):
-    return render(request, 'home/login.html')
+def loginView(request):
+    return render(request, '/login.html')
 def register(request):
-    return render(request, 'home/register.html')
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login') #redirect user to login page when account creation is successfull
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form':form})
+
+@login_required
 def homepage(request):
     return render(request, 'home/homepage.html')
 def footer(request):
