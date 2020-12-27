@@ -4,12 +4,13 @@
     <title>main</title>
 </head>
 <body>
+
+{% if user.is_authenticated %}
 {% include 'home/navbar.html' %}
-
+    {% else %}
+     {% include 'home/home.html' %}
+{% endif %}
 {% block content %}
-
-
-
 {% endblock %}
 
 </body>

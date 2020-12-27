@@ -120,6 +120,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_REDIRECT_URL = '/homepage'
+
 MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [
