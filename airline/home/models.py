@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+#İrfan Ege Saray
+
 # Create your models here.
 
 #********************************************Eski deneme DB*************************************************
