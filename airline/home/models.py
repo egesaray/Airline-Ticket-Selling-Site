@@ -7,75 +7,37 @@ from django.conf import settings
 
 # Create your models here.
 
-#********************************************Eski deneme DB*************************************************
-# class user(models.Model):
-#     name = models.CharField(max_length=200, null=True)
-#     phone = models.CharField(max_length=200, null=True)
-#     email = models.CharField(max_length=200, null=True)
-#     date_created = models.DateTimeField(auto_now_add=True, null= True)
-#
-#     def __str__(self):
-#         return self.name
-#
-# class ticket(models.Model):
-#     time = models.CharField(max_length=200, null=True)
-#     seat = models.CharField(max_length=200, null=True)
-#     nofpassengers = models.FloatField(null=True)
-#     departure = models.CharField(max_length=200, null=True)
-#     destination = models.CharField(max_length=200, null=True)
-#     price = models.FloatField(null=True)
-#     date_created = models.DateTimeField(auto_now_add=True, null=True)
-#
-# class Order(models.Model):
-#     user = models.ForeignKey(user, null=True, on_delete= models.SET_NULL)
-#     ticket = models.ForeignKey(ticket, null=True, on_delete= models.SET_NULL)
-#     date_created = models.DateTimeField(auto_now_add=True, null=True)
-#     status = models.CharField(max_length=200, null=True)
-#
-#
-# class Comment(models.Model):
-#     product = models.ForeignKey(ticket, on_delete=models.CASCADE, related_name='comments')
-#     comment_content = models.TextField()
-#     commenter = models.ForeignKey(User, on_delete=models.CASCADE)
-#     created_on = models.DateTimeField(auto_now_add=True)
-#     active = models.BooleanField(default=False)
-#
-#     class Meta:
-#         ordering = ['-created_on']
-#
-#     def __str__(self):
-#         return f'{self.comment_content} by {self.commenter}'
-#********************************************Eski deneme DB*************************************************
-
-
-
-#REGISTEREDUSER bize django tarafından sağlanacak
-#içeriği : first_name
-#        : last_name
-#        : username *** V1.0 Rad class diagram da yok sonradan eklenebilir
-#        : email
-#        : password
-#        : phoonenumber  *** djangonun sağladığı user içinde yok nasıl ekleneceği çözülecek!!!!!
-#*******************************************************
-#ADMIN bize django tarafından sağlanacak
-#içeriği : username
-#        : password
-#*******************************************************
-#
-#
-# class User(AbstractUser):
-#      phoneNumber = models.CharField(max_length=10 ,blank=True)
-#      email = models.EmailField(max_length=254,primary_key=True)
-#
-
 #Problem çıkmasını engellemek için geliştirme sürecinde hepsi null=True , son sürümde güncellenecektir.
+
+
+#********************************ÖNEMLİ*******************************
+# şifrelerin gizlenmesi,authentication gibi özellikler için djangonun sağladığı userı kullanıyoruz
+# ancak user ın başka şeylerle bağlantı kurması gerekiyor örneğin uçak bileti, bundan dolayı RegisteredUser tablosu oluşturuyoruz
+# ve bu tablo django'nun userı ile OneToOne relation kuruyor. Bir kişi kayıt olduğunda o kişi için registeredUser tablosu oluşması gerek
+# ve bunun nasıl yapılacağına dair internette kaynaklar mevcut
+#********************************ÖNEMLİ*******************************
+
+class RegisteredUser(models.Model):
+
+    user= models.OneToOneField(User,null=True,on_delete=models.CASCADE)   ## realation with django's user
+
+    first_name = models.CharField(max_length=255,null=True)
+    last_name = models.CharField(max_length=255, null=True)
+    phone = models.CharField(max_length=11, null=True)
+    email = models.EmailField(max_length=254)
+    date_created = models.DateField(auto_now_add=True,null=True)
+
+    def __str__(self):
+        return self.last_name
+
+
 class CreditCard(models.Model):
     cardNumber= models.DecimalField(max_digits=16,decimal_places=0 , primary_key=True)
     cardName= models.CharField(max_length=255,null=True)
     expirationDate=models.DateField(auto_now_add=False,auto_now=False,null=True)# form ile uyumsuzluk olursa integer yapılabilir
     cvv = models.DecimalField(max_digits=3,decimal_places=0,null=True)
     cardHolderName = models.CharField(max_length=255,null=True)
-    #RegisteredUseremail  foreign key ????!!!!?
+    registereduser =models.ForeignKey(RegisteredUser,null=True,on_delete= models.SET_NULL)
     def __str__(self):
         return self.cardName
 
@@ -89,7 +51,7 @@ class Feedback(models.Model):
     feedback_id = models.CharField(max_length=255,primary_key=True)
     type= models.CharField(max_length=255,null=True,choices=TYPE)
     text= models.CharField(max_length=1000,null=True)
-    # RegisteredUseremail  foreign key ????!!!!?
+    registereduser =models.ForeignKey(RegisteredUser,null=True,on_delete= models.SET_NULL)
 
     def __str__(self):
         return self.feedback_id
@@ -122,36 +84,9 @@ class Ticket(models.Model):
     id= models.CharField(max_length=10 ,primary_key=True)
     price= models.DecimalField(max_digits=10,decimal_places=2,null=True) #example: 25648910,50
     seat = models.CharField(max_length=255,null=True)
-    tickettype =models.ForeignKey(ChildTicket,on_delete=models.CASCADE,null=True)        #Inheritence düzeltilecek
+    tickettype =models.ForeignKey(ChildTicket,on_delete=models.CASCADE,null=True)        #Inheritence
     flights = models.ManyToManyField(Flight)
-    # RegisteredUseremail  foreign key ????!!!!?
+    registereduser =models.ForeignKey(RegisteredUser,null=True,on_delete= models.SET_NULL)
     def __str__(self):
         return self.id
-
-
-
-
-# ***************eski********************
-# class EconomyTicket(models.Model):
-#     economy_priviliges = models.CharField(max_length=500,null=True)
-#     Ticketid=models.ForeignKey(Ticket,null=True,on_delete=models.CASCADE)#on_delete???
-#
-# class BusinessTicket(models.Model):
-#     business_priviliges = models.CharField(max_length=500,null=True)
-#     Ticketid=models.ForeignKey(Ticket,null=True,on_delete=models.CASCADE)#on_delete???
-#
-# class FirstClassTicket(models.Model):
-#     firstclass_priviliges = models.CharField(max_length=500,null=True)
-#     Ticketid=models.ForeignKey(Ticket,null=True,on_delete=models.CASCADE)#on_delete???
-# ***************eski********************
-#
-# class Ticket_Flight(models.Model):
-#     Ticketid =models.ForeignKey(Ticket,null=True,on_delete=models.SET_NULL)
-#     Flightpnr =models.ForeignKey(Flight,null=True,on_delete=models.SET_NULL)
-#
-#
-# class Airport_Flight(models.Model):
-#     departure_arrival =models.ManyToManyField(Airport) #ilk seçilen kalkış, aradakiler aktarma,son seçilen varış olabilir??!!
-#     Flightpnr = models.ForeignKey(Flight, null=True, on_delete=models.SET_NULL)
-
 
