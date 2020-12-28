@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 #İrfan Ege Saray
 
@@ -59,9 +61,12 @@ from django.contrib.auth.models import User
 #içeriği : username
 #        : password
 #*******************************************************
-
-
-
+#
+#
+# class User(AbstractUser):
+#      phoneNumber = models.CharField(max_length=10 ,blank=True)
+#      email = models.EmailField(max_length=254,primary_key=True)
+#
 
 #Problem çıkmasını engellemek için geliştirme sürecinde hepsi null=True , son sürümde güncellenecektir.
 class CreditCard(models.Model):
@@ -81,7 +86,7 @@ class Feedback(models.Model):
         ('suggestion','suggestion'),
         ('complaint','complaint')
     )
-    feedback_id = models.DecimalField(max_digits=10,decimal_places=0,primary_key=True)
+    feedback_id = models.CharField(max_length=255,primary_key=True)
     type= models.CharField(max_length=255,null=True,choices=TYPE)
     text= models.CharField(max_length=1000,null=True)
     # RegisteredUseremail  foreign key ????!!!!?
@@ -90,9 +95,20 @@ class Feedback(models.Model):
         return self.feedback_id
 
 
+class Airport(models.Model):
+    id= models.CharField(max_length=10 ,primary_key=True)
+    name=models.CharField(max_length=255,null=True)
+    address=models.CharField(max_length=500,null=True)
+    def __str__(self):
+        return self.name
 
 
-#Ticket inheritence doğru değil!?!?!?!
+class Flight(models.Model):
+    pnr=models.CharField(max_length=10,primary_key=True)
+    fligthdate=models.DateField(auto_now_add=False,auto_now=False,null=True)
+    destinations = models.ManyToManyField(Airport)  # ilk seçilen kalkış, aradakiler aktarma,son seçilen varış olabilir??!!
+    def __str__(self):
+        return self.pnr
 
 
 class ChildTicket(models.Model):
@@ -106,10 +122,14 @@ class Ticket(models.Model):
     id= models.CharField(max_length=10 ,primary_key=True)
     price= models.DecimalField(max_digits=10,decimal_places=2,null=True) #example: 25648910,50
     seat = models.CharField(max_length=255,null=True)
-    tag =models.ManyToManyField(ChildTicket)
+    tickettype =models.ForeignKey(ChildTicket,on_delete=models.CASCADE,null=True)        #Inheritence düzeltilecek
+    flights = models.ManyToManyField(Flight)
     # RegisteredUseremail  foreign key ????!!!!?
     def __str__(self):
         return self.id
+
+
+
 
 # ***************eski********************
 # class EconomyTicket(models.Model):
@@ -124,25 +144,14 @@ class Ticket(models.Model):
 #     firstclass_priviliges = models.CharField(max_length=500,null=True)
 #     Ticketid=models.ForeignKey(Ticket,null=True,on_delete=models.CASCADE)#on_delete???
 # ***************eski********************
-
-class Flight(models.Model):
-    pnr=models.DecimalField(max_digits=10,decimal_places=0,null=True)
-    fligthdate=models.DateField(auto_now_add=False,auto_now=False,null=True)
-
-
-class Airport(models.Model):
-    id= models.CharField(max_length=10 ,primary_key=True)
-    name=models.CharField(max_length=255,null=True)
-    address=models.CharField(max_length=500,null=True)
-
-
-class Ticket_Flight(models.Model):
-    Ticketid =models.ForeignKey(Ticket,null=True,on_delete=models.SET_NULL)
-    Flightpnr =models.ForeignKey(Flight,null=True,on_delete=models.SET_NULL)
-
-
-class Airport_Flight(models.Model):
-    departure_arrival =models.ManyToManyField(Airport) #ilk seçilen kalkış, aradakiler aktarma,son seçilen varış olabilir??!!
-    Flightpnr = models.ForeignKey(Flight, null=True, on_delete=models.SET_NULL)
+#
+# class Ticket_Flight(models.Model):
+#     Ticketid =models.ForeignKey(Ticket,null=True,on_delete=models.SET_NULL)
+#     Flightpnr =models.ForeignKey(Flight,null=True,on_delete=models.SET_NULL)
+#
+#
+# class Airport_Flight(models.Model):
+#     departure_arrival =models.ManyToManyField(Airport) #ilk seçilen kalkış, aradakiler aktarma,son seçilen varış olabilir??!!
+#     Flightpnr = models.ForeignKey(Flight, null=True, on_delete=models.SET_NULL)
 
 

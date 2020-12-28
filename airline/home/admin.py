@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
 from .models import *
@@ -9,8 +10,6 @@ admin.site.register(ChildTicket)
 admin.site.register(Ticket)
 admin.site.register(Flight)
 admin.site.register(Airport)
-admin.site.register(Ticket_Flight)
-admin.site.register(Airport_Flight)
 
 #
 # admin.site.register(user)
