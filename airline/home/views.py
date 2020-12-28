@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+
 # Create your views here.
+
 
 def home(request):
     return render(request, 'home/home.html')
