@@ -28,7 +28,9 @@ class RegisteredUser(models.Model):
     date_created = models.DateField(auto_now_add=True,null=True)
 
     def __str__(self):
-        return self.last_name
+        return self.first_name+" "+self.last_name
+    def register(self):
+        return self.save()
 
 
 class CreditCard(models.Model):
