@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as dj_login
 from .forms import RegistrationForm
 from home.models import RegisteredUser, User
+from django.contrib import messages
+from .forms import *
 
 # Create your views here.
 
@@ -52,9 +54,21 @@ def footer(request):
     return render(request, 'home/footer.html')
 def header(request):
     return render(request, 'home/header.html')
+
+
 @login_required
 def changeEmail(request):
-    return render(request, 'home/changeEmail.html')
+    registereduser = request.user.registereduser
+    form = ChangeEmailForm(instance=registereduser)
+
+    if request.method =='POST':
+        form = ChangeEmailForm(request.POST,instance=registereduser)
+        if form.is_valid():
+            form.save()
+    context = {'form':form}
+    return render(request, 'home/changeEmail.html', context)
+
+
 @login_required
 def changePassword(request):
     return render(request, 'home/changePassword.html')
