@@ -72,9 +72,13 @@ def changeEmail(request):
 @login_required
 def changePassword(request):
     return render(request, 'home/changePassword.html')
+
 @login_required
 def creditcards(request):
-    return render(request, 'home/creditcards.html')
+    mycreditcards = request.user.registereduser.creditcard_set.all()
+    context= {'mycreditcards':mycreditcards }
+    return render(request, 'home/creditcards.html',context)
+
 @login_required
 def logout(request):
     return render(request, 'home/logout.html')

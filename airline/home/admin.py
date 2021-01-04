@@ -6,7 +6,7 @@ from .models import *
 
 admin.site.register(CreditCard)
 admin.site.register(Feedback)
-admin.site.register(ChildTicket)
+admin.site.register(Ticketclass)
 admin.site.register(Ticket)
 admin.site.register(Flight)
 admin.site.register(Airport)

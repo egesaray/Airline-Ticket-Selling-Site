@@ -32,4 +32,3 @@ class ChangeEmailForm(ModelForm):
          'phone': forms.TextInput(attrs={'class': 'form-control'}),
          'email': forms.TextInput(attrs={'class': 'form-control'}),
       }
-
