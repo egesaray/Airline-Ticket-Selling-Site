@@ -8,6 +8,7 @@ from .forms import RegistrationForm
 from home.models import RegisteredUser, User
 from django.contrib import messages
 from .forms import *
+from .models import *
 
 # Create your views here.
 
@@ -94,18 +95,29 @@ def aboutus(request):
     return render(request, 'home/aboutus.html')
 def navbar(request):
     return render(request, 'home/navbar.html')
+
+
 @login_required
-def checkin(request):
+def checkin(request,flight_class): #if içinde cls==economy cls==business+30..
+
     return render(request, 'home/checkin.html')
+
+
 @login_required
 def Feedback(request):
     return render(request, 'home/Feedback.html')
 @login_required
 def buyticket(request):
     return render(request, 'home/buyticket.html')
+
 @login_required
-def chooseclass(request):
-    return render(request, 'home/chooseclass.html')
+def chooseclass(request, id):
+    url = 'home/chooseclass.html'
+    context = Ticket.objects.get(id=id)
+    price = context.price
+    return render(request,url,{'context':context})
+
+
 @login_required
 def forgotPassword(request):
     return render(request, 'home/forgotPassword.html')

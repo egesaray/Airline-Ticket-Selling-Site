@@ -45,6 +45,9 @@ class CreditCard(models.Model):
     def __str__(self):
         return self.cardName
 
+    def creditcards(self):
+        return self.save()
+
 
 class Feedback(models.Model):
     TYPE = (
@@ -79,19 +82,19 @@ class Flight(models.Model):
         return self.pnr
 
 
-class Ticketclass(models.Model):
-    ticket_name = models.CharField(max_length=500, null=True)  # economy,business,first class names
-    extra_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    def __str__(self):
-        return self.ticket_name
-
-
-class Ticket(models.Model,):
+class Ticket(models.Model):
     trip_choice=(('o','oneway'),('r','roundtrip'),)
     trip=models.CharField(max_length=5, choices=trip_choice)
     price= models.DecimalField(max_digits=10,decimal_places=2,null=True) #example: 25648910,50
     seat = models.CharField(max_length=255,null=True)
     registereduser =models.ForeignKey(RegisteredUser,null=True,on_delete= models.SET_NULL)
-    ticketclass = models.ForeignKey(Ticketclass, on_delete=models.CASCADE, null=True)  # Inheritence
-    flight = models.ManyToManyField(Flight)
+    ticketclass = models.CharField(max_length=255,null=True)
+    flight = models.ForeignKey(Flight,null=True,on_delete=models.CASCADE)
+    ticket_name = models.CharField(max_length=500, null=True)  # economy,business,first class names
+    extra_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
+    def __str__(self):
+        return self.ticket_name
+
+    def chooseclass(self):
+        return self.save()

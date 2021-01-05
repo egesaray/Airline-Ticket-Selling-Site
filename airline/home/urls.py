@@ -1,9 +1,10 @@
 from django.urls import path
-from . import views
+from .import views
 from airline import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
+from .views import chooseclass
 
 urlpatterns = [
     # leave as empty string fo base url
@@ -27,7 +28,7 @@ urlpatterns = [
     path('checkin/', views.checkin, name="checkin"),
     path('Feedback/', views.Feedback, name="Feedback"),
     path('buyticket/', views.buyticket, name="buyticket"),
-    path('chooseclass/', views.chooseclass, name="chooseclass"),
+    path('chooseclass/<int:id>', chooseclass, name="chooseclass"),
     path('forgotPassword/', views.forgotPassword, name="forgotPassword"),
 
 
