@@ -123,6 +123,19 @@ select:focus {
         <hr>
         <center><p><font face="tahoma" size="5" color="maroon"><b>Search For Flights</b></font></p></center>
 
+                {% for i in flights %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ i.pnr }}
+            {{ i.departure_time }}
+            {{ i.arrival_time }}
+            {{ i.airport }}
+            <a href="{% url 'chooseclass' i.id %}" name="choose" class="btn btn-danger" role="button">Continue</a>
+        </form>
+        <br>
+        {% endfor %}
+
+
         <!--First Row-->
         <div class="row mb-3 mt-3"> <label class="radiobtn"><input type="radio" name="gender" value="male">One Way</label> <label class="radiobtn"><input type="radio" name="gender" value="male">Round Trip</label> </div>
         <!--Second Row-->

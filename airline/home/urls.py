@@ -17,6 +17,7 @@ urlpatterns = [
     path('changeEmail/', views.changeEmail, name="changeEmail"),
     path('changePassword/', views.changePassword, name="changePassword"),
     path('creditcards/', views.creditcards, name="creditcards"),
+    path('delete_creditcard/<int:pk>', views.delete_creditcard, name="delete_creditcard"),
     path('footer/', views.footer, name="footer"),
     path('header/', views.header, name="header"),
 
