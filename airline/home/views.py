@@ -91,6 +91,16 @@ def creditcards(request):
     return render(request, 'home/creditcards.html',context)
 
 
+@login_required
+def Feedback(request):
+    form = ContactForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            form = ContactForm(request.POST)
+            form.save()
+    context = {'form': form}
+    return render(request, 'home/Feedback.html', context)
+
 
 @login_required
 def delete_creditcard(request,pk):
@@ -130,9 +140,8 @@ def checkin(request,flight_class): #if içinde cls==economy cls==business+30..
     return render(request, 'home/checkin.html')
 
 
-@login_required
-def Feedback(request):
-    return render(request, 'home/Feedback.html')
+
+
 @login_required
 def buyticket(request):
     return render(request, 'home/buyticket.html')

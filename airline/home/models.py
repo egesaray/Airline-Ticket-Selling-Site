@@ -55,13 +55,12 @@ class Feedback(models.Model):
         ('suggestion','suggestion'),
         ('complaint','complaint')
     )
-    feedback_id = models.CharField(max_length=255,null=True)
+
     type= models.CharField(max_length=255,null=True,choices=TYPE)
     text= models.TextField()
     registereduser =models.ForeignKey(RegisteredUser,null=True,on_delete= models.SET_NULL)
 
-    def __str__(self):
-        return self.feedback_id
+
 
 
 class Airport(models.Model):

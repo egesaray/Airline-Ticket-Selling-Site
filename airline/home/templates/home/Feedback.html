@@ -1,7 +1,7 @@
 {% extends 'home/main.html' %}
 {% load static %}
 {% block content %}
-<!--Berkan Hakseven-->
+<!--Ortak-->
 <head>
     <meta charset="UTF-8">
     <title>Feedback</title>
@@ -13,6 +13,34 @@
 </head>
 
 <body class="first-info" >
+
+        <div class="container">
+            <h2>Contact us form</h2>
+            <hr>
+            <br>
+            <form  role="form" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label >Username</label>
+                    {{ username }}
+
+                </div>
+                <div class="form-group">
+                    <label >Type</label>
+                        {{form.type}}
+                </div>
+                <div class="form-group">
+                    <label >Text</label>
+                        {{form.text}}
+                </div>
+                <br>
+                <div class="form-group">
+                    <button class="btn btn-blue" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+        <br><br><br>
+
 
 
 
