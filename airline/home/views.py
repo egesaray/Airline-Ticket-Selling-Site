@@ -51,7 +51,7 @@ def register(request):
 @login_required
 def homepage(request):
     flights = Flight.objects.all()
-    context = {'flights': flights}
+    context = {'flights': flights }
 
     return render(request, 'home/homepage.html', context)
 def footer(request):
@@ -80,14 +80,17 @@ def changePassword(request):
 
 @login_required
 def creditcards(request):
-    mycreditcards = request.user.registereduser.creditcard_set.all()#set sil
-    form = AddCreditCardForm(request.POST)
+    mycreditcards = request.user.registereduser.creditcard_set.all()
+    ruser= request.user.registereduser
+    form = AddCreditCardForm(data=request.POST, registereduser=ruser)
     if request.method =='POST':
         if form.is_valid():
-            form =AddCreditCardForm(request.POST)
+            form =AddCreditCardForm(data=request.POST)
             form.save()
 
-    context= {'mycreditcards':mycreditcards , 'form':form }
+
+
+    context= {'mycreditcards':mycreditcards , 'form':form ,'ruser':ruser}
     return render(request, 'home/creditcards.html',context)
 
 

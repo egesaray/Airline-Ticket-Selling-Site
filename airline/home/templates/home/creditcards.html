@@ -27,7 +27,7 @@
 
                     <div class="carousel-item active">
                         <div style="text-align: center;">
-                            <h3>Slide to see your credit cards</h3>
+                            <h3>{{ruser.id}}</h3>
                         </div>
                     </div>
                     {% for mycreditcards in mycreditcards %}
@@ -64,6 +64,7 @@
             <div class="card-body p-4">
                 <form role="form" method="POST">
                     {% csrf_token %}
+                    {{ form.management_form }}
                     <div class="form-group">
                         <label>Name to store your card</label>
                         <div class="input-group">
@@ -121,7 +122,6 @@
                             <div class="form-group">
                                 <label>CVV</label>
                                 {{form.cvv}}
-                                {{form.registereduser}}
                             </div>
                         </div>
                     </div>

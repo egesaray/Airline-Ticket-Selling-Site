@@ -34,10 +34,24 @@ class ChangeEmailForm(ModelForm):
          'email': forms.TextInput(attrs={'class': 'form-control'}),
       }
 
+
 class AddCreditCardForm(ModelForm):
+   #
+   # def __init__(self, **kwargs):
+   #    self.registereduser = kwargs.pop('registereduser', None)
+   #    super(AddCreditCardForm, self).__init__(**kwargs)
+   #
+   # def save(self, commit=True):
+   #    obj = super(AddCreditCardForm, self).save(commit=False)
+   #    obj.registereduser = self.registereduser
+   #    if commit:
+   #       obj.save()
+   #    return obj
+   #
+
    class Meta:
-      model=CreditCard
-      fields =['cardName','cardNumber','expiration','cvv' ,'cardHolderName','registereduser']
+      model = CreditCard
+      fields = ['cardName', 'cardNumber', 'expiration', 'cvv', 'cardHolderName', 'registereduser']
       widgets = {
          'cardName': forms.TextInput(attrs={'class': 'form-control'}),
          'cardNumber': forms.TextInput(attrs={'class': 'form-control'}),
