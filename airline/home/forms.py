@@ -45,9 +45,3 @@ class AddCreditCardForm(ModelForm):
          'cvv': forms.TextInput(attrs={'class': 'form-control'}),
          'cardHolderName': forms.TextInput(attrs={'class': 'form-control'}),
       }
-
-
-class ContactForm(ModelForm):
-   class Meta:
-      model = Feedback
-      fields = ['text', 'type']
