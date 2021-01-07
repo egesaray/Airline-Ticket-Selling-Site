@@ -45,3 +45,9 @@ class AddCreditCardForm(ModelForm):
          'cvv': forms.TextInput(attrs={'class': 'form-control'}),
          'cardHolderName': forms.TextInput(attrs={'class': 'form-control'}),
       }
+
+
+class ContactForm(forms.Form):
+   username = forms.CharField(required=True)
+   from_email = forms.EmailField(required=True)
+   message = forms.CharField(widget=forms.Textarea, required=True)

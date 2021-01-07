@@ -38,7 +38,8 @@
 		<i class="fa fa-credit-card"></i>  Credit Card 2</a></li>
 
 </ul>
-<form role="form" >
+<form role="form" action="/ticket_has_been_purchased/{{ ticket.id }}" method="POST" >
+          {% csrf_token %}
 <div class="form-group">
 <label for="username">Cardholder Name</label>
 <div class="input-group">
@@ -107,7 +108,7 @@
         </div>
     </div>
 </div>
-<button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
+   <input type="submit" value="Submit">
 </form>
 </div>
 </article>

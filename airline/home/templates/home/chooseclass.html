@@ -33,14 +33,14 @@
                                <p><i>The distance between the seats is small and the seats are not wide.But it is ideal for short-term flights.</i><p>
                              </div>
 
-                            <div class="btn"> <a href="/checkin/economy" class="btn bg-blue-ui white read">Select</a> </div>
+                            <div class="btn"> <a href="/buyticket/economy&{{ context.id }}&{{ choices }}" class="btn bg-blue-ui white read" id="secim" value="economy">Select</a> </div>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-4" >
                         <div class="item-box-blog" style="margin:-200px auto">
                           <div class="item-box-blog-image">
-                            <div class="item-box-blog-cost bg-blue-ui white"> <span class="cost">+29.99$</span> </div>
+                            <div class="item-box-blog-cost bg-blue-ui white" id="business"> <span class="cost">+29.99$</span> </div>
                             <figure><img src="/static/images/business-class.png" >  </figure>
                           </div>
                           <div class="item-box-blog-body">
@@ -51,8 +51,7 @@
                             <div class="item-box-blog-text" style="background-color:#ffefd5">
                                <p><i>It offers a fully reclining seat, a personalized reading lamp, plug, food and drink throughout the trip</i><p>
                              </div>
-                            <div class="btn"> <a href="/checkin/business" class="btn bg-blue-ui white read">Select</a> </div>
-
+                            <div class="btn"> <a href="/buyticket/business&{{ context.id }}&{{ choices }}" class="btn bg-blue-ui white read" id="secim" value="business">Select</a> </div>
                           </div>
                         </div>
                       </div>
@@ -60,7 +59,7 @@
                         <div class="item-box-blog" style="margin:-200px auto">
                           <div class="item-box-blog-image">
 
-                            <div class="item-box-blog-cost bg-blue-ui white"> <span class="cost">+59.99$</span> </div>
+                            <div class="item-box-blog-cost bg-blue-ui white" id="first_class"> <span class="cost">+59.99$</span> </div>
                             <figure><img src="/static/images/first-class.png" ></figure>
                           </div>
                           <div class="item-box-blog-body">
@@ -71,7 +70,7 @@
                             <div class="item-box-blog-text" style="background-color:#ffefd5">
                               <p><i>It offers unlimited services such as beds,bathrooms,delicious food and treats from each other and television.</i><p>
                              </div>
-                            <div class="btn"> <a href="/checkin/first"  class="btn bg-blue-ui white read">Select</a></div>
+                            <div class="btn"> <a href="/buyticket/first&{{ context.id }}&{{ choices }}"  class="btn bg-blue-ui white read" id="secim" value="first_class">Select</a></div>
 
                           </div>
                         </div>
@@ -82,7 +81,8 @@
            </div>
     </div>
 
-&nbsp
+&nbsp;
 </body>
 {% endblock %}
+
 </html>
