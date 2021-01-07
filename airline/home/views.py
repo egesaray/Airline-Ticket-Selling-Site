@@ -18,9 +18,11 @@ from .models import *
 
 def home(request):
     return render(request, 'home/home.html')
+
 def loginView(request):
     context ={}
     return render(request, 'registration/login.html',context)
+
 def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
@@ -94,6 +96,16 @@ def creditcards(request):
     return render(request, 'home/creditcards.html',context)
 
 
+@login_required
+def Feedback(request):
+    form = ContactForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            form = ContactForm(request.POST)
+            form.save()
+    context = {'form': form}
+    return render(request, 'home/Feedback.html', context)
+
 
 @login_required
 def delete_creditcard(request,pk):
@@ -119,26 +131,35 @@ def myflights(request):
     registered_user = RegisteredUser.objects.get(user=user)
     my_tickets = Ticket.objects.filter(registereduser=registered_user)
 
+    # brute force approach to get the current date
+    get_datetime_now = str(datetime.datetime.now()).split(' ')
+    get_date_now = str(get_datetime_now[0]).split('-')
+    year = get_date_now[0]
+    month = get_date_now[1]
+    day = get_date_now[2]
+
     # to return values
     past_flights = []
     incoming_flights = []
 
-    '''
+
     # to detect past and next
     for ticket in my_tickets:
         flight = ticket.flight
-        if flight.departure_time < datetime.datetime.now():
+
+        departure_time = str(flight.departure_time).split('-')
+        departure_time_year = departure_time[0]
+        departure_time_month = departure_time[1]
+        departure_time_day = departure_time[2]
+
+        if int(departure_time_year) < int(year) \
+                or (int(departure_time_year).__eq__(int(year)) and int(departure_time_month) < int(month)) \
+                or (int(departure_time_year).__eq__(int(year)) and int(departure_time_month).__eq__(int(month)) and int(departure_time_day) < int(day)):
             past_flights.append(ticket)
         else:
             incoming_flights.append(ticket)
 
-    print("next = ")
-    print(incoming_flights)
-
-    print("past = ")
-    print(past_flights)
-    '''
-    return render(request, 'home/myflights.html')
+    return render(request, 'home/myflights.html', {'past_flights' : past_flights, 'incoming_flights' : incoming_flights})
 
 
 @login_required
@@ -155,23 +176,6 @@ def navbar(request):
 @login_required
 def checkin(request):
     return render(request, 'home/checkin.html')
-@login_required
-def Feedback(request):
-    if request.method == 'POST':
-        form = ContactForm()
-    else:
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            subject = form.cleaned_data['subject']
-            email = form.cleaned_data['from_email']
-            text = form.cleaned_data['message']
-            try:
-                send_mail(username, email, text, ['anzelozturk97@gmail.com'])
-            except BadHeaderError:
-                return HttpResponse('Invalid header found. ')
-            return render(request, 'home/Feedback.html', {'username': username})
-    return render(request, 'home/Feedback.html', {'form': form})
 
 @login_required
 def buyticket(request,values):
@@ -199,10 +203,13 @@ def buyticket(request,values):
     adult_price = int(price)
     senior_price = int(price / 2)
 
-    # to find the registered user using user that makes request  #sor!!
+    # to find the registered user using user that makes request
     user_id = request.user.id
     user = User.objects.get(id=user_id)
     registered_user = RegisteredUser.objects.get(user=user)
+
+    # aynisi aslinda
+    # registered_user = RegisteredUser.objects.get(user=request.user.id)
 
     # to store total price
     ticket_price = 0
@@ -229,7 +236,6 @@ def choose_class(request, id):
     adult = request.POST.get('adult')
     senior = request.POST.get('senior')
     choices = "ch_" + str(kid) + "_" + str(adult) + "_" + str(senior)
-
     return render(request,url,{'context':context, 'choices' : choices})
 
 @login_required
@@ -246,6 +252,14 @@ def selected_flight(request, flight_id):
     flight = Flight.objects.get(id=flight_id)
     return render(request, url, {'flight': flight})
 
+@login_required
+def view_ticket(request, id):
+    ticket = Ticket.objects.get(id=id)
+    return render(request , 'home/view_ticket.html',{'ticket':ticket})
+
+def cancel_ticket(request , id):
+    Ticket.objects.get(id=id).delete()
+    return redirect('/myflights')
 
 @login_required
 def forgotPassword(request):

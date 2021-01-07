@@ -56,13 +56,12 @@ class Feedback(models.Model):
         ('suggestion','suggestion'),
         ('complaint','complaint')
     )
-    feedback_id = models.CharField(max_length=255,null=True)
+
     type= models.CharField(max_length=255,null=True,choices=TYPE)
     text= models.TextField()
     registereduser =models.ForeignKey(RegisteredUser,null=True,on_delete= models.SET_NULL)
 
-    def __str__(self):
-        return self.feedback_id
+
 
 
 class Airport(models.Model):
@@ -75,8 +74,8 @@ class Airport(models.Model):
 
 class Flight(models.Model):
     pnr=models.CharField(max_length=10, null=True)
-    departure_time = models.DateTimeField(auto_now_add=False, auto_now=False, null=True)
-    arrival_time = models.DateTimeField(auto_now_add=False, auto_now=False, null=True)
+    departure_time = models.DateField(auto_now_add=False, auto_now=False, null=True)
+    arrival_time = models.DateField(auto_now_add=False, auto_now=False, null=True)
     from_airport = models.ForeignKey(Airport, null=True,on_delete=models.SET_NULL, related_name="from_airport")
     to_airport = models.ForeignKey(Airport, null=True,on_delete=models.SET_NULL, related_name="to_airport")
     price= models.DecimalField(max_digits=10,decimal_places=2,null=True)
@@ -98,6 +97,7 @@ class Ticket(models.Model):
     ticket_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     created_at = models.CharField(max_length=255,null=True)
     is_approval = models.CharField(max_length=1, null=True)
+
 
     def __str__(self):
         return self.ticket_class

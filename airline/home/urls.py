@@ -28,6 +28,8 @@ urlpatterns = [
     path('choose_class/<int:id>', views.choose_class, name="choose_class"),
     path('selected_flight/<int:flight_id>', views.selected_flight, name="selected_flight"),
     path('ticket_has_been_purchased/<int:id>', views.ticket_has_been_purchased, name="ticket_has_been_purchased"),
+    path('view_ticket/<int:id>', views.view_ticket, name="view_ticket"),
+    path('cancel_ticket/<int:id>', views.cancel_ticket, name="cancel_ticket"),
 
     path('ticket/', views.ticket, name="ticket"),
     path('aboutus/', views.aboutus, name="aboutus"),

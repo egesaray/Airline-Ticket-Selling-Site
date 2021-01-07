@@ -16,10 +16,10 @@ class RegistrationForm(UserCreationForm):
       fields = ['username', 'first_name', 'last_name', 'phone', 'email', 'password1', 'password2']
 
 
-class ContactForm(forms.ModelForm):
-   username = forms.CharField(required=True)
-   from_email = forms.EmailField(required=True)
-   message = forms.CharField(widget=forms.Textarea, required=True)
+class ContactForm(ModelForm):
+   class Meta:
+      model = Feedback
+      fields = ['text', 'type']
 
 
 
@@ -47,7 +47,7 @@ class AddCreditCardForm(ModelForm):
       }
 
 
-class ContactForm(forms.Form):
-   username = forms.CharField(required=True)
-   from_email = forms.EmailField(required=True)
-   message = forms.CharField(widget=forms.Textarea, required=True)
+class ContactForm(ModelForm):
+   class Meta:
+      model = Feedback
+      fields = ['text', 'type']
