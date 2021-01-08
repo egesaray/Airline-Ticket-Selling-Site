@@ -37,7 +37,7 @@ class ChangeEmailForm(ModelForm):
 class AddCreditCardForm(ModelForm):
    class Meta:
       model=CreditCard
-      fields =['cardName','cardNumber','expiration','cvv' ,'cardHolderName','registereduser']
+      fields =['cardName','cardNumber','expiration','cvv' ,'cardHolderName']
       widgets = {
          'cardName': forms.TextInput(attrs={'class': 'form-control'}),
          'cardNumber': forms.TextInput(attrs={'class': 'form-control'}),

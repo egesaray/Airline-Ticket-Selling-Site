@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm , PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as dj_login
+from django.contrib.auth import update_session_auth_hash
 from .forms import RegistrationForm
 from home.models import RegisteredUser, User
 from django.contrib import messages
@@ -59,6 +60,7 @@ def homepage(request):
     context = {'flights': flights}
 
     return render(request, 'home/homepage.html', context)
+
 def footer(request):
     return render(request, 'home/footer.html')
 def header(request):
@@ -81,16 +83,35 @@ def changeEmail(request):
 
 @login_required
 def changePassword(request):
-    return render(request, 'home/changePassword.html')
+    form = PasswordChangeForm(data=request.POST, user=request.user)
+    if request.method =='POST':
+        form = PasswordChangeForm(data=request.POST,user=request.user)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request,form.user) # değiştirdikten sonra hala giriş yapmış şekilde kalması için
+            return redirect('/homepage')
+    context = {'form':form}
+    return render(request, 'home/changePassword.html',context)
 
 @login_required
 def creditcards(request):
-    mycreditcards = request.user.registereduser.creditcard_set.all()#set sil
+    mycreditcards = request.user.registereduser.creditcard_set.all()
+    ruser = request.user.registereduser
+
     form = AddCreditCardForm(request.POST)
     if request.method =='POST':
         if form.is_valid():
             form =AddCreditCardForm(request.POST)
-            form.save()
+            cardName = request.POST['cardName']
+            cardNumber = request.POST['cardNumber']
+            expiration = request.POST['expiration']
+            cvv = request.POST['cvv']
+            cardHolderName = request.POST['cardHolderName']
+
+            credit_card = CreditCard(cardName=cardName,cardNumber=cardNumber,expiration=expiration,
+                                     cvv=cvv,cardHolderName=cardHolderName, registereduser=ruser)
+            credit_card.save()
+
 
     context= {'mycreditcards':mycreditcards , 'form':form}
     return render(request, 'home/creditcards.html',context)

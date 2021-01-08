@@ -5,19 +5,10 @@ from django.conf import settings
 from .models import *
 from django.utils.translation import ugettext_lazy as _
 
-#İrfan Ege Saray
-
 # Create your models here.
 
 #Problem çıkmasını engellemek için geliştirme sürecinde hepsi null=True , son sürümde güncellenecektir.
 
-
-#***********ÖNEMLİ**********
-# şifrelerin gizlenmesi,authentication gibi özellikler için djangonun sağladığı userı kullanıyoruz
-# ancak user ın başka şeylerle bağlantı kurması gerekiyor örneğin uçak bileti, bundan dolayı RegisteredUser tablosu oluşturuyoruz
-# ve bu tablo django'nun userı ile OneToOne relation kuruyor. Bir kişi kayıt olduğunda o kişi için registeredUser tablosu oluşması gerek
-# ve bunun nasıl yapılacağına dair internette kaynaklar mevcut
-#***********ÖNEMLİ**********
 
 class RegisteredUser(models.Model):
 
