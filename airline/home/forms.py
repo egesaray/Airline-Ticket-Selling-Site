@@ -20,6 +20,9 @@ class ContactForm(ModelForm):
    class Meta:
       model = Feedback
       fields = ['text', 'type']
+      widgets = {
+          'text': forms.Textarea(attrs={'class': 'form-control'}),
+      }
 
 
 
@@ -37,11 +40,10 @@ class ChangeEmailForm(ModelForm):
 class AddCreditCardForm(ModelForm):
    class Meta:
       model=CreditCard
-      fields =['cardName','cardNumber','expiration','cvv' ,'cardHolderName','registereduser']
+      fields =['cardName','cardNumber','expirationmonth','expirationyear' ,'cvv' ,'cardHolderName']
       widgets = {
          'cardName': forms.TextInput(attrs={'class': 'form-control'}),
          'cardNumber': forms.TextInput(attrs={'class': 'form-control'}),
-         'expiration': forms.TextInput(attrs={'class': 'form-control'}),
          'cvv': forms.TextInput(attrs={'class': 'form-control'}),
          'cardHolderName': forms.TextInput(attrs={'class': 'form-control'}),
       }

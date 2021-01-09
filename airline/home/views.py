@@ -1,17 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.views import View
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from .forms import RegistrationForm
-from home.models import RegisteredUser, User
 from django.contrib import messages
-from django.core.mail import send_mail, BadHeaderError
 from django.utils import timezone
 import datetime
 from .forms import *
 from .models import *
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
@@ -86,29 +83,59 @@ def changeEmail(request):
 
 @login_required
 def changePassword(request):
-    return render(request, 'home/changePassword.html')
+
+    form = PasswordChangeForm(data=request.POST, user=request.user)
+    if request.method =='POST':
+        form = PasswordChangeForm(data=request.POST,user=request.user)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request,form.user) # değiştirdikten sonra hala giriş yapmış şekilde kalması için
+            return redirect('/homepage')
+
+    context = {'form':form}
+    return render(request, 'home/changePassword.html', context)
 
 @login_required
 def creditcards(request):
-    mycreditcards = request.user.registereduser.creditcard_set.all()#set sil
+    mycreditcards = request.user.registereduser.creditcard_set.all()
+    ruser = request.user.registereduser
+
     form = AddCreditCardForm(request.POST)
     if request.method =='POST':
         if form.is_valid():
             form =AddCreditCardForm(request.POST)
-            form.save()
+            cardName = request.POST['cardName']
+            cardNumber = request.POST['cardNumber']
+            expirationmonth = request.POST['expirationmonth']
+            expirationyear = request.POST['expirationyear']
+            cvv = request.POST['cvv']
+            cardHolderName = request.POST['cardHolderName']
+
+            credit_card = CreditCard(cardName=cardName,cardNumber=cardNumber,expirationmonth=expirationmonth,
+                                     expirationyear=expirationyear,cvv=cvv,cardHolderName=cardHolderName, registereduser=ruser)
+            credit_card.save()
 
     context= {'mycreditcards':mycreditcards , 'form':form}
     return render(request, 'home/creditcards.html',context)
 
 
 @login_required
-def Feedback(request):
+def FeedbackPage(request):
+    ruser = request.user.registereduser
+    feedbackresponse = Feedback.objects.filter(registereduser=ruser)
+
     form = ContactForm(request.POST)
-    if request.method == 'POST':
+    if request.method =='POST':
         if form.is_valid():
-            form = ContactForm(request.POST)
-            form.save()
-    context = {'form': form}
+            form =ContactForm(request.POST)
+            typer = request.POST['type']
+            textr = request.POST['text']
+
+            new_feedback = Feedback(type=typer, text=textr, registereduser=ruser)
+            new_feedback.save()
+            return redirect('/homepage')
+
+    context = {'form': form, 'ruser': ruser , 'feedbackresponse':feedbackresponse}
     return render(request, 'home/Feedback.html', context)
 
 
@@ -183,6 +210,8 @@ def checkin(request):
 
 @login_required
 def buyticket(request,values):
+
+
     # to get critical values from url
     values = str(values).split('&')
     try:
@@ -212,6 +241,11 @@ def buyticket(request,values):
     user = User.objects.get(id=user_id)
     registered_user = RegisteredUser.objects.get(user=user)
 
+
+    #saved cards
+    # mycreditcards = registered_user.creditcard_set.all
+    mycreditcards = request.user.registereduser.creditcard_set.all()
+
     # aynisi aslinda
     # registered_user = RegisteredUser.objects.get(user=request.user.id)
 
@@ -230,7 +264,7 @@ def buyticket(request,values):
     ticket = Ticket(trip='o', registereduser=registered_user, ticket_class=flight_class, flight=flight, ticket_price=ticket_price, created_at=timezone.now(), is_approval='F')
     ticket.save(force_insert=True)
 
-    return render(request, 'home/buyticket.html', {'ticket':ticket})
+    return render(request, 'home/buyticket.html', {'ticket':ticket ,'mycreditcards':mycreditcards})
 
 @login_required
 def choose_class(request, id):

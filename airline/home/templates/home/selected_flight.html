@@ -110,22 +110,22 @@ select:focus {
 </style>
 
 <body class="first-info" >
-<div class="card shadow mb-5 bg-white rounded" style=" margin-top: 100px; " class="first-info" >
+<div class="card shadow mb-5 bg-white rounded text-center" style=" margin-top: 100px; " >
    <!--First Row-->
         <div class="row mb-3 mt-3"> <label class="radiobtn"><input type="radio" name="gender" value="male">One Way</label> <label class="radiobtn"><input type="radio" name="gender" value="male">Round Trip</label> </div>
         <!--Second Row-->
         <div class="row">
-            <div class="col-sm-6"> <select class="browser-default custom-select mb-4" id="from">
-                    <option value="" disabled="" selected="">{{ flight.from_airport }}</option>
-                </select> </div>
-            <div class="col-sm-6"> <select class="browser-default custom-select mb-4" id="to">
-                    <option value="" disabled="" selected="">{{ flight.to_airport }}</option>
-                </select> </div>
+            <div class="col-sm-6">
+                <h5>Departure Airport:</h5><p>{{ flight.from_airport }} </p>
+            </div>
+            <div class="col-sm-6">
+                <h5>Arrival Airport:</h5><p>{{ flight.to_airport }} </p>
+            </div>
         </div>
         <!--Third Row-->
         <div class="row">
-            <div class="col-sm-6"> <input placeholder="{{ flight.departure_time }}" type="text" id="departure_t" class="form-control datepicker mb-4" style="font-family:Arial, FontAwesome"> </div>
-            <div class="col-sm-6"> <input placeholder="{{ flight.arrival_time }}" type="text" id="arrival_t" class="form-control datepicker" style="font-family:Arial, FontAwesome"> </div>
+            <div class="col-sm-6"><hr><h5>Departure date:</h5><p>{{ flight.departure_time }}  /  {{ flight.departure_hour }}</p></div>
+            <div class="col-sm-6"><hr><h5>Arrival date:</h5><p>{{ flight.arrival_time }}  /  {{ flight.arrival_hour }}</p></div>
         </div>
 
     <form action="/choose_class/{{ flight.id }}" method="POST" id="ticket_detail_form">
@@ -154,8 +154,9 @@ select:focus {
               <option value="2">2</option>
               <option value="3">3</option>
             </select>
-
-            <input type="submit" value="Submit">
+            <b>Base Price:</b>  {{flight.price}}
+            <br><br>
+            <input type="submit" value="Submit" class="btn btn-info btn-block">
 
         </div>
     </form>

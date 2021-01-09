@@ -121,19 +121,35 @@ select:focus {
         </div>
         <hr>
         <center><p><font face="tahoma" size="5" color="maroon"><b>Available Flights</b></font></p></center>
-
+            <table class="table table-hover text-center">
+                <thead>
+                <tr>
+                    <th>PNR</th>
+                    <th>Departure Date</th>
+                    <th>Arrival Date</th>
+                    <th>Departure Airport</th>
+                    <th>Arrival Airport</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
                 {% for i in flights %}
-       <center> <form action="" method="POST">
-            {% csrf_token %}
-            {{ i.pnr }}
-            {{ i.departure_time }}
-            {{ i.arrival_time }}
-            {{ i.from_airport }} -->
-            {{ i.to_airport }}
-            <a href="{% url 'selected_flight' i.id %}" name="choose" class="btn btn-danger" role="button">Continue</a>
-        </form></center>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <tr>
+                        <td>{{ i.pnr }}</td>
+                        <td>{{ i.departure_time }} / {{ i.departure_hour }}</td>
+                        <td>{{ i.arrival_time }} / {{ i.arrival_hour }}</td>
+                        <td>{{ i.from_airport }}</td>
+                        <td>{{ i.to_airport }}</td>
+                        <td><a href="{% url 'selected_flight' i.id %}" name="choose" class="btn btn-danger" role="button">Continue</a></td>
+                    </tr>
+                </form>
+                {% endfor %}
+                </tbody>
+            </table>
         <br>
-        {% endfor %}
+
     </div>
 </div>
 <br><br><br><br>

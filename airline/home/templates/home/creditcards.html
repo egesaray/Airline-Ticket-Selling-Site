@@ -21,7 +21,7 @@
 <div class="row">
     <div class="col-sm-4"></div>
     <div class="col-sm-4">
-        <div class="container border p-3 my-3 bg-warning text-white">
+        <div class="container border p-3 my-3 " style="background-color:#ff9f40" >
             <div id="carouselExampleControls" class="carousel slide">
                 <div class="carousel-inner">
 
@@ -57,10 +57,13 @@
 </div>
 
 
+
+
+
 <div class="row">
     <div class="col-sm-4"></div>
     <div class="col-sm-4">
-        <div class="card border  my-4 bg-warning text-white">
+        <div class="card border  my-4"  style="background-color:#ff9f40" >
             <div class="card-body p-4">
                 <form role="form" method="POST">
                     {% csrf_token %}
@@ -87,41 +90,16 @@
                             <div class="form-group">
                                 <label><span class="hidden-xs">Expiration Date</span> </label>
                                 <div class="form-inline">
-                                    <!--<select class="form-control" style="width:45%">
-                                        <option>01</option>
-                                        <option>02</option>
-                                        <option>03</option>
-                                        <option>04</option>
-                                        <option>05</option>
-                                        <option>06</option>
-                                        <option>07</option>
-                                        <option>08</option>
-                                        <option>09</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                    </select>
-                                    <span style="width:10%; text-align: center"> / </span>
-                                    <select class="form-control" style="width:45%">
-                                        <option>2021</option>
-                                        <option>2022</option>
-                                        <option>2023</option>
-                                        <option>2024</option>
-                                        <option>2025</option>
-                                        <option>2026</option>
-                                        <option>2027</option>
-                                        <option>2028</option>
-                                    </select>-->
-                                    {{form.expiration}}
-                                    <small id="expirationhelp" class="form-text text-muted">Please enter your expiration date in xx/xx form.(exp: 06/24)</small>
-                                </div>
+                                    {{form.expirationmonth}}
+                                    <span style="width:10%; text-align: center"> <h4>/</h4> </span>
+                                    {{form.expirationyear}}
+                                    </div>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label>CVV</label>
                                 {{form.cvv}}
-                                {{form.registereduser}}
                             </div>
                         </div>
                     </div>

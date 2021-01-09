@@ -36,8 +36,7 @@ urlpatterns = [
     path('contactus/', views.contactus, name="contactus"),
     path('navbar/', views.navbar, name="navbar"),
     path('checkin/', views.checkin, name="checkin"),
-    path('Feedback/', views.Feedback, name="Feedback"),
+    path('FeedbackPage/', views.FeedbackPage, name="FeedbackPage"),
     path('forgotPassword/', views.forgotPassword, name="forgotPassword"),
-
 
    ]
