@@ -20,7 +20,6 @@ from django.utils.translation import ugettext_lazy as _
 #***********ÖNEMLİ**********
 
 class RegisteredUser(models.Model):
-
     user= models.OneToOneField(User,null=True,on_delete=models.CASCADE)   ## realation with django's user
     first_name = models.CharField(max_length=255,null=True)
     last_name = models.CharField(max_length=255, null=True)
@@ -28,9 +27,9 @@ class RegisteredUser(models.Model):
     email = models.EmailField(max_length=254)
     date_created = models.DateField(auto_now_add=True,null=True)
 
-
     def __str__(self):
         return self.first_name+" "+self.last_name
+    
     def register(self):
         return self.save()
 

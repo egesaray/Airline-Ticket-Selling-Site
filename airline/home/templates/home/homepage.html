@@ -1,7 +1,6 @@
 {% extends 'home/main.html' %}
 {% load static %}
 {% block content %}
-<!--Seray Şimşek-->
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
@@ -124,7 +123,7 @@ select:focus {
         <center><p><font face="tahoma" size="5" color="maroon"><b>Available Flights</b></font></p></center>
 
                 {% for i in flights %}
-        <form action="" method="POST">
+       <center> <form action="" method="POST">
             {% csrf_token %}
             {{ i.pnr }}
             {{ i.departure_time }}
@@ -132,7 +131,7 @@ select:focus {
             {{ i.from_airport }} -->
             {{ i.to_airport }}
             <a href="{% url 'selected_flight' i.id %}" name="choose" class="btn btn-danger" role="button">Continue</a>
-        </form>
+        </form></center>
         <br>
         {% endfor %}
     </div>

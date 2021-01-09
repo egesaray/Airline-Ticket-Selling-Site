@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login as dj_login
+from django.contrib.auth import authenticate, login
 from .forms import RegistrationForm
 from home.models import RegisteredUser, User
 from django.contrib import messages
@@ -20,8 +20,21 @@ def home(request):
     return render(request, 'home/home.html')
 
 def loginView(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password1')
+        user = authenticate(request, username=username, password1=password)#databsede olup olmadığını kontrol etmek için
+        if username is not None:
+            login(request, user)
+            return redirect('home.html')
+        else:
+            messages.info(request, 'Username OR password is incorrect')
     context ={}
     return render(request, 'registration/login.html',context)
+
+@login_required
+def logout(request):
+    return render(request, 'home/logout.html')
 
 def register(request):
     if request.method == "POST":
@@ -35,23 +48,14 @@ def register(request):
             last_name = request.POST['last_name']
             phone = request.POST['phone']
             email = request.POST['email']
-
-            values = {
-                'first_name': first_name,
-                'last_name': last_name,
-                'phone': phone,
-                'email': email,
-                'user': user
-            }
-
-            registereduser = RegisteredUser(first_name=first_name,last_name=last_name, phone=phone, email=email, user=user )
+            registereduser = RegisteredUser(first_name=first_name, last_name=last_name, phone=phone, email=email,user=user)
             registereduser.save()
-            dj_login(request, user)
+            login(request, user)
+            messages.success(request, 'Account was created for ' + username)
             return redirect('login')  # redirect user to login page when account creation is successfull
     else:
         form = RegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
-
 
 @login_required
 def homepage(request):
@@ -59,11 +63,12 @@ def homepage(request):
     context = {'flights': flights}
 
     return render(request, 'home/homepage.html', context)
+
 def footer(request):
     return render(request, 'home/footer.html')
+
 def header(request):
     return render(request, 'home/header.html')
-
 
 
 @login_required
@@ -117,10 +122,6 @@ def delete_creditcard(request,pk):
     return render(request, 'home/delete_creditcard.html',context)
 
 
-@login_required
-def logout(request):
-    return render(request, 'home/logout.html')
-
 
 @login_required
 def myflights(request):
@@ -165,10 +166,13 @@ def myflights(request):
 @login_required
 def ticket(request):
     return render(request, 'home/ticket.html')
+
 def contactus(request):
     return render(request, 'home/contactus.html')
+
 def aboutus(request):
     return render(request, 'home/aboutus.html')
+
 def navbar(request):
     return render(request, 'home/navbar.html')
 

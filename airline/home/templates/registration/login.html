@@ -21,9 +21,16 @@
                    <p>username: genericuser  şifre: zxcv4321    //// teslim edesiye kadar burda dursun kolaylık olması için</p>
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Login</button>
 
-                </form></center>
+
+                    {% for message in messages %}
+                   <p id="messages">{{ message }}</p>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Login</button>
+                   </form></center>
+
+                <center> <p>Don't have an account?  <a href="{% url 'register' %}"><button class="button" ><span>Register</span></button></a></p> </center>
+
                  </div>
              </div>
         </div>
