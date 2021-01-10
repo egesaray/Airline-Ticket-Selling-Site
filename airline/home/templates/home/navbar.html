@@ -33,7 +33,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="nav navbar-nav navbar-right " style="margin-left: 35rem !important;" ><font  size="5" color="white"><b><i>Hoşgeldin, {{user.username}}</i></b></font></a>
+    <a class="nav navbar-nav navbar-right " style="margin-left: 32rem !important;" ><font  size="5" color="white"><b><i>Hoşgeldin, {{user.username}}</i></b></font></a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown" style="margin-left: 3% !important;">
         <ul class="navbar-nav">
             <li class="nav-item active">
@@ -50,7 +50,7 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li><a class="dropdown-item" href="{% url 'myflights' %}">My Flights</a></li>
                     <li><a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a></li>
-                    <li><a class="dropdown-item" href="{% url 'changeEmail' %}">Change Email</a></li>
+                    <li><a class="dropdown-item" href="{% url 'changeEmail' %}">Change Information</a></li>
                     <li><a class="dropdown-item" href="{% url 'creditcards' %}">Credit Cards</a></li>
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                 </ul>

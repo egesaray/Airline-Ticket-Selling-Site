@@ -11,6 +11,19 @@
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
 
+        <script>
+        function dogrula() {
+            var x = document.forms["ticket_detail_form"]["kid"].value;
+            var y = document.forms["ticket_detail_form"]["adult"].value;
+            var z = document.forms["ticket_detail_form"]["senior"].value;
+            if ( x=="0" && y=="0" && z=="0"){
+                alert("Please choose at least one option!");
+                return false;
+            }
+        }
+        </script>
+
+
 </head>
 <style>
 .card {
@@ -111,9 +124,9 @@ select:focus {
 
 <body class="first-info" >
 <div class="card shadow mb-5 bg-white rounded text-center" style=" margin-top: 100px; " >
-   <!--First Row-->
+
         <div class="row mb-3 mt-3"> <label class="radiobtn"><input type="radio" name="gender" value="male">One Way</label> <label class="radiobtn"><input type="radio" name="gender" value="male">Round Trip</label> </div>
-        <!--Second Row-->
+
         <div class="row">
             <div class="col-sm-6">
                 <h5>Departure Airport:</h5><p>{{ flight.from_airport }} </p>
@@ -122,33 +135,33 @@ select:focus {
                 <h5>Arrival Airport:</h5><p>{{ flight.to_airport }} </p>
             </div>
         </div>
-        <!--Third Row-->
+
         <div class="row">
             <div class="col-sm-6"><hr><h5>Departure date:</h5><p>{{ flight.departure_time }}  /  {{ flight.departure_hour }}</p></div>
             <div class="col-sm-6"><hr><h5>Arrival date:</h5><p>{{ flight.arrival_time }}  /  {{ flight.arrival_hour }}</p></div>
         </div>
 
-    <form action="/choose_class/{{ flight.id }}" method="POST" id="ticket_detail_form">
+
+
+    <form onsubmit="return dogrula()" action="/choose_class/{{ flight.id }}" method="POST" id="ticket_detail_form" name="ticket_detail_form" >
          {% csrf_token %}
         <div class="row">
-            <label for="kid">Kids(0-14)</label>
-            <select class="browser-default custom-select mb-4" id="kid" name="kid" form="ticket_detail_form">
+            <label for="kid">Kids(7-14) <small>(0-7) age free</small></label>
+            <select class="browser-default custom-select mb-4 form-control" id="kid" name="kid" form="ticket_detail_form" >
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
             </select>
-
             <label for="adult">Adults(14-65)</label>
-            <select class="browser-default custom-select mb-4" id="adult" name="adult" form="ticket_detail_form">
+            <select class="browser-default custom-select mb-4 form-control" id="adult" name="adult" form="ticket_detail_form" >
               <option value="0">0</option>
-              <option value="1">1</option>
+              <option value="1">1 </option>
               <option value="2">2</option>
               <option value="3">3</option>
             </select>
-
             <label for="senior">Senior(65+)</label>
-            <select class="browser-default custom-select mb-4" id="senior" name="senior" form="ticket_detail_form">
+            <select class="browser-default custom-select mb-4 form-control" id="senior" name="senior" form="ticket_detail_form" >
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -157,11 +170,8 @@ select:focus {
             <b>Base Price:</b>  {{flight.price}}
             <br><br>
             <input type="submit" value="Submit" class="btn btn-info btn-block">
-
         </div>
     </form>
-
-
 </div>
 <br><br><br><br>
 </body>

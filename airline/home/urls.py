@@ -11,8 +11,6 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name="login"),
     path('register/', views.register, name="register"),
     path('logout/', LogoutView.as_view(next_page='home'), name="logout"),
-    path('footer/', views.footer, name="footer"),
-    path('header/', views.header, name="header"),
 
 
     path('homepage/', views.homepage, name="homepage"),
@@ -31,12 +29,12 @@ urlpatterns = [
     path('view_ticket/<int:id>', views.view_ticket, name="view_ticket"),
     path('cancel_ticket/<int:id>', views.cancel_ticket, name="cancel_ticket"),
 
-    path('ticket/', views.ticket, name="ticket"),
-    path('aboutus/', views.aboutus, name="aboutus"),
-    path('contactus/', views.contactus, name="contactus"),
-    path('navbar/', views.navbar, name="navbar"),
+
     path('checkin/', views.checkin, name="checkin"),
     path('FeedbackPage/', views.FeedbackPage, name="FeedbackPage"),
-    path('forgotPassword/', views.forgotPassword, name="forgotPassword"),
+
+
+
+    path('ChooseSeat/<str:values>', views.ChooseSeat, name="ChooseSeat"),
 
    ]

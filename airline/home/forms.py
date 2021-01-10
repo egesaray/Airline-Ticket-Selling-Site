@@ -15,7 +15,6 @@ class RegistrationForm(UserCreationForm):
       model = User
       fields = ['username', 'first_name', 'last_name', 'phone', 'email', 'password1', 'password2']
 
-
 class ContactForm(ModelForm):
    class Meta:
       model = Feedback
@@ -23,8 +22,6 @@ class ContactForm(ModelForm):
       widgets = {
           'text': forms.Textarea(attrs={'class': 'form-control'}),
       }
-
-
 
 class ChangeEmailForm(ModelForm):
    class Meta:

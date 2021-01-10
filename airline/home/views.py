@@ -6,16 +6,19 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.utils import timezone
 import datetime
+from datetime import timedelta
+from .decorators import unauthenticated_user
 from .forms import *
 from .models import *
 from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
-
+@unauthenticated_user
 def home(request):
     return render(request, 'home/home.html')
 
+@unauthenticated_user
 def loginView(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -29,10 +32,7 @@ def loginView(request):
     context ={}
     return render(request, 'registration/login.html',context)
 
-@login_required
-def logout(request):
-    return render(request, 'home/logout.html')
-
+@unauthenticated_user
 def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
@@ -54,18 +54,18 @@ def register(request):
         form = RegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+
+
+@login_required
+def logout(request):
+    return render(request, 'home/logout.html')
+
 @login_required
 def homepage(request):
-    flights = Flight.objects.all()
-    context = {'flights': flights}
+    flights = Flight.objects.filter(departure_time__range=[timezone.now(), "2022-01-01"])
 
+    context = {'flights':flights }
     return render(request, 'home/homepage.html', context)
-
-def footer(request):
-    return render(request, 'home/footer.html')
-
-def header(request):
-    return render(request, 'home/header.html')
 
 
 @login_required
@@ -77,6 +77,7 @@ def changeEmail(request):
         form = ChangeEmailForm(request.POST,instance=registereduser)
         if form.is_valid():
             form.save()
+            return redirect('/homepage')
     context = {'form':form}
     return render(request, 'home/changeEmail.html', context)
 
@@ -153,25 +154,24 @@ def delete_creditcard(request,pk):
 @login_required
 def myflights(request):
 
-    # to find critical information
+
     user_id = request.user.id
     user = User.objects.get(id=user_id)
     registered_user = RegisteredUser.objects.get(user=user)
     my_tickets = Ticket.objects.filter(registereduser=registered_user)
 
-    # brute force approach to get the current date
+
     get_datetime_now = str(datetime.datetime.now()).split(' ')
     get_date_now = str(get_datetime_now[0]).split('-')
     year = get_date_now[0]
     month = get_date_now[1]
     day = get_date_now[2]
 
-    # to return values
+
     past_flights = []
     incoming_flights = []
 
 
-    # to detect past and next
     for ticket in my_tickets:
         flight = ticket.flight
 
@@ -190,29 +190,41 @@ def myflights(request):
     return render(request, 'home/myflights.html', {'past_flights' : past_flights, 'incoming_flights' : incoming_flights})
 
 
-@login_required
-def ticket(request):
-    return render(request, 'home/ticket.html')
-
-def contactus(request):
-    return render(request, 'home/contactus.html')
-
-def aboutus(request):
-    return render(request, 'home/aboutus.html')
-
-def navbar(request):
-    return render(request, 'home/navbar.html')
-
 
 @login_required
 def checkin(request):
-    return render(request, 'home/checkin.html')
+
+
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
+    registered_user = RegisteredUser.objects.get(user=user)
+    my_tickets = Ticket.objects.filter(registereduser=registered_user)
+
+
+    incoming_flights = []
+
+
+    for ticket in my_tickets:
+        flight = ticket.flight
+        deparature_date = datetime.datetime.strptime(str(flight.departure_time) + ' ' + str(flight.departure_hour), '%Y-%m-%d %H:%M:%S')
+        get_datetime_yesterday = deparature_date - datetime.timedelta(days=1)
+        if datetime.datetime.now() > get_datetime_yesterday and datetime.datetime.now() < deparature_date:
+                incoming_flights.append(ticket)
+
+
+    Ticket.objects.filter(registereduser=registered_user, flight=flight).update(is_checkin=True)
+
+
+    return render(request, 'home/checkin.html', {'incoming_flights': incoming_flights})
 
 @login_required
 def buyticket(request,values):
 
+    Arow = request.POST.get('Arow')
+    Acolumn = request.POST.get('Acolumn')
+    selectedseats = str(Arow) + "-" + str(Acolumn)
 
-    # to get critical values from url
+
     values = str(values).split('&')
     try:
         flight_class = values[0]
@@ -221,33 +233,33 @@ def buyticket(request,values):
     except:
         return HttpResponse("Invalid request")
 
-    # kid-adult-senior
+
     values_of_choices = str(choices).split('_')
     kid = int(values_of_choices[1])
     adult = int(values_of_choices[2])
     senior = int(values_of_choices[3])
 
-    # flight information
+
     flight = Flight.objects.get(id=flight_id)
     price = flight.price
 
-    # will be used for calculations per a ticket
     kid_price = int(price / 3)
     adult_price = int(price)
     senior_price = int(price / 2)
 
-    # to find the registered user using user that makes request
+
     user_id = request.user.id
     user = User.objects.get(id=user_id)
     registered_user = RegisteredUser.objects.get(user=user)
 
+    # aynisi aslinda
+    # registered_user = RegisteredUser.objects.get(user=request.user.id)
 
     #saved cards
     # mycreditcards = registered_user.creditcard_set.all
     mycreditcards = request.user.registereduser.creditcard_set.all()
 
-    # aynisi aslinda
-    # registered_user = RegisteredUser.objects.get(user=request.user.id)
+
 
     # to store total price
     ticket_price = 0
@@ -261,8 +273,8 @@ def buyticket(request,values):
         return HttpResponse("Invalid request")
 
     # kredi karti onayindan sonra...
-    ticket = Ticket(trip='o', registereduser=registered_user, ticket_class=flight_class, flight=flight, ticket_price=ticket_price, created_at=timezone.now(), is_approval='F')
-    ticket.save(force_insert=True)
+    ticket = Ticket(trip='o',seat=selectedseats , registereduser=registered_user, ticket_class=flight_class, flight=flight, ticket_price=ticket_price, created_at=timezone.now(), is_approval='F')
+    ticket.save()
 
     return render(request, 'home/buyticket.html', {'ticket':ticket ,'mycreditcards':mycreditcards})
 
@@ -281,6 +293,7 @@ def ticket_has_been_purchased(request, id):
     Ticket.objects.filter(id=id).update(is_approval='T')
     return redirect('/completed')
 
+@login_required
 def completed(request):
     return render(request, 'home/completed.html')
 
@@ -293,15 +306,36 @@ def selected_flight(request, flight_id):
 @login_required
 def view_ticket(request, id):
     ticket = Ticket.objects.get(id=id)
-    return render(request , 'home/view_ticket.html',{'ticket':ticket})
+    ruser = request.user.registereduser
+    namee= str(ruser.first_name) + " " + str(ruser.last_name)
+    return render(request , 'home/view_ticket.html',{'ticket':ticket , 'namee':namee })
 
+@login_required
 def cancel_ticket(request , id):
     Ticket.objects.get(id=id).delete()
     return redirect('/myflights')
 
 @login_required
-def forgotPassword(request):
-    return render(request, 'home/forgotPassword.html')
+def ChooseSeat(request, values):
+    vals= values
 
+    values = str(values).split('&')
+    flight_class = values[0]
+    flight_id = values[1]
+    choices = values[2]
+
+    values_of_choices = str(choices).split('_')
+    kid = int(values_of_choices[1])
+    adult = int(values_of_choices[2])
+    senior = int(values_of_choices[3])
+
+    total = kid+adult+senior
+
+    count = []
+    for i in range(0,total):
+        count.append(i)
+
+
+    return render(request,'home/ChooseSeat.html' ,  {'vals':vals ,'count':count  })
 
 
