@@ -1,0 +1,39 @@
+
+{% load static %}
+{% block content %}
+<!--Seray Şimşek-->
+<head>
+	<title>Login Page</title>
+
+		<link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/background.css' %}">
+
+</head>
+
+<body class="row first-info">
+<div class="container">
+        <div class="row main">
+            <div class="main login main-center">
+<center><p><font face="tahoma" size="4" color="maroon"><b>LOGIN</b></font></p></center>
+
+            <div class="card-body">
+               <center> <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+
+                    {% for message in messages %}
+                   <p id="messages">{{ message }}</p>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Login</button>
+                   </form></center>
+
+                <center> <p>Don't have an account?  <a href="{% url 'register' %}"><button class="button" ><span>Register</span></button></a></p> </center>
+
+                 </div>
+             </div>
+        </div>
+  </div>
+
+</body>
+{% endblock content %}

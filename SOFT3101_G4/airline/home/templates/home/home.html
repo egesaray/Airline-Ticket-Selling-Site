@@ -1,0 +1,93 @@
+{% load static %}
+{% block content %}
+<!--ortak-->
+<head>
+    <meta charset="UTF-8">
+    <title>Işık Express</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/background.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet"  type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://d19m59y37dris4.cloudfront.net/universal/2-0-1/vendor/font-awesome/css/font-awesome.min.css">
+
+</head>
+<style>
+ .button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+
+}
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+
+<body class="first-info" >
+<div class="top-bar">
+        <div class="container">
+          <div class="row d-flex align-items-center">
+            <div class="col-md-6 d-md-block d-none">
+                 <a href="/"><img src="/static/images/logo.png" style="height: 80px; width: 80px">
+                <a href="/"><font  size="5" color="white"><b><i> Işık Express</i></b></font></a></a>
+                </a>
+            </div>
+
+            <div class="col-md-6">
+              <div class="d-flex justify-content-md-end justify-content-between">
+                <div class="login">
+                    <a href="{% url 'login' %}" data-toggle="modal" data-target="#login-modal" class="login-btn"><i class="fa fa-sign-in"></i>
+                    <span class="d-none d-md-inline-block">Sign In</span>
+                    </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+ <div class="row" style=" width: 17%; height: 150px;margin: auto;margin-top: 70px">
+     <a href="{% url 'register' %}"><button class="button" style="vertical-align:middle"><span>Register</span></button></a>
+ </div>
+
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+
+
+{% include 'home/footer.html' %}
+
+</body>
+{% endblock %}

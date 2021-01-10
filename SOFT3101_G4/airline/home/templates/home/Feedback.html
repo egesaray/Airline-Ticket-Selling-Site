@@ -1,0 +1,55 @@
+{% extends 'home/main.html' %}
+{% load static %}
+{% block content %}
+<!--Ortak-->
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/background.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js">
+
+
+</head>
+<body class="first-info" >
+        <div class="container border p-5 my-5 rounded" style="background-color:#ff9f40">
+            <center><h2>Feedback Form</h2></center>
+            <hr color="#ff0000">
+            <br>
+            <form role="form" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label><b>Type</b></label>
+                    <br>
+                        {{form.type}}
+                </div>
+                <div class="form-group">
+                    <label><b>Text</b></label>
+                        {{form.text}}
+                </div>
+                <br>
+                <div class="form-group">
+                    <button class="btn btn-dark btn-block" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+        <br>
+        <div class="container border p-5 my-5 rounded" style="background-color:#ff9f40">
+        <center><h2>Messages</h2></center>
+            <br><hr color="#ff0000"><br>
+        {% for i in feedbackresponse %}
+            <b>Type: </b>{{ i.type }}
+            <br>
+            <b>Text:</b><br>{{ i.text }}
+            <br>
+        <b>Response:</b><br>
+            {{ i.adminresponse }}
+            <br><hr color="#ff0000"><br>
+        {% endfor %}
+        </div>
+
+
+</body>
+{% endblock %}

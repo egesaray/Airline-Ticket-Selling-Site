@@ -1,0 +1,155 @@
+{% extends 'home/main.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/background.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js">
+
+</head>
+<style>
+.card {
+    margin: auto;
+    border: solid 1px #dbdad7;
+    width: 60%;
+    padding-left: 10px !important;
+    padding-bottom: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 0px !important
+}
+
+.card-title {
+    margin: auto;
+    padding: 15px;
+    background-color: #2f7fad;
+    color: white;
+    width: 80%
+}
+
+div.card-body {
+    padding: 0px
+}
+
+.custom-select {
+    width: 100%
+}
+
+.btn2 {
+    margin-left: 10%
+}
+
+input {
+    outline: 0 !important;
+    border-width: 0 0 2px !important;
+    border-color: #d1d1cf !important
+}
+
+input:focus {
+    border-color: #d1d1cf !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important
+}
+
+select {
+    outline: 0 !important;
+    border-width: 0 0 2px !important;
+    border-color: #d1d1cf !important
+}
+
+select:focus {
+    border-color: #d1d1cf !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important
+}
+
+.radiobtn {
+    margin-left: 3.5%
+}
+
+.icons {
+    margin: auto !important
+}
+
+.fa {
+    border-radius: 25px;
+    width: 10%;
+    margin-left: 5%;
+    border: solid 2px #dbdad7;
+    margin-top: 5%;
+    text-align: center
+}
+
+
+@media only screen and (max-width: 600px) {
+    .card {
+        margin: auto;
+        border: solid 1px #dbdad7;
+        width: 90%;
+        padding-left: 10px !important;
+        padding-bottom: 10px !important;
+        padding-right: 10px !important;
+        padding-top: 0px !important
+    }
+
+    .fa {
+        border-radius: 25px;
+        width: 15%;
+        margin-left: 5%;
+        border: solid 2px #dbdad7;
+        margin-top: 5%;
+        text-align: center
+    }
+}
+
+
+</style>
+
+<body class="first-info" >
+
+<div class="card shadow mb-5 bg-white rounded" style=" margin-top: 100px; " class="first-info" >
+    <div class="card-body" style=" margin-top: 30px; ">
+
+        <p class="card-title text-center shadow mb-5 rounded" >Travel Booking Form</p>
+        <div class="icons text-center">
+            <img src="/static/images/logo.png" style="height: 70px; width: 70px; ">
+        </div>
+        <hr>
+        <center><p><font face="tahoma" size="5" color="maroon"><b>Available Flights</b></font></p></center>
+            <table class="table table-hover text-center">
+                <thead>
+                <tr>
+                    <th>PNR</th>
+                    <th>Departure Date</th>
+                    <th>Arrival Date</th>
+                    <th>Departure Airport</th>
+                    <th>Arrival Airport</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in flights %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <tr>
+                        <td>{{ i.pnr }}</td>
+                        <td>{{ i.departure_time }} / {{ i.departure_hour }}</td>
+                        <td>{{ i.arrival_time }} / {{ i.arrival_hour }}</td>
+                        <td>{{ i.from_airport }}</td>
+                        <td>{{ i.to_airport }}</td>
+                        <td><a href="{% url 'selected_flight' i.id %}" name="choose" class="btn btn-danger" role="button">Continue</a></td>
+                    </tr>
+                </form>
+                {% endfor %}
+                </tbody>
+            </table>
+        <br>
+
+    </div>
+</div>
+<br><br><br><br>
+</body>
+{% endblock %}

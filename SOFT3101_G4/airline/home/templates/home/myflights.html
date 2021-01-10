@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% extends 'home/main.html' %}
+<!--Anzel Öztürk-->
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Flights</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/myflights.css">
+</head>
+
+<body class="first-info">
+<section>
+<div class="container">
+    <div class="row" style="margin:200px auto"  >
+            <div class="row justify-content-center">
+                {% for incoming_flight in incoming_flights %}
+                <div class="col-lg-6 mbr-col-md-10">
+
+                  <a href="/view_ticket/{{incoming_flight.id}}"><div class="flight">
+
+                        <div class="ico-flight">
+                            <span class="iconfont fa-calendar fa" style="margin-left:35%"></span>
+                        </div>
+                        <div class="text-flight center">
+                            <h2 class="fonts-style ie-bold type-title display-title"><span>Incoming Flight</span></h2>
+                            <p class="fonts-style text1 ie-text display-small-title">{{ incoming_flight.flight.departure_time }} / {{ incoming_flight.flight.departure_hour }}  ({{ incoming_flight.flight.from_airport }}) --> {{ incoming_flight.flight.arrival_time }} / {{incoming_flight.flight.arrival_hour}} ({{ incoming_flight.flight.to_airport }}) </p>
+                        </div>
+                        <a href="/cancel_ticket/{{ incoming_flight.id }}"><b style='font-size:15px;'>&#10006;Cancel Ticket</b></a>
+
+                    </div></a>
+
+                </div>
+                 {% endfor %}
+                {% for past_flight in past_flights %}
+                <div class="col-lg-6 mbr-col-md-10">
+
+                      <a href="/view_ticket/{{past_flight.id}}"><div class="flight">
+                        <div class="ico-flight">
+
+                            <span class="iconfont fa-calendar fa"></span>
+                        </div>
+                        <div class="text-flight center">
+                                 <h2 class="fonts-style ie-bold type-title display-title"><span>Past Flight</span></h2>
+                            </h2>
+                            <p class="fonts-style text1 ie-text display-small-title">{{ past_flight.flight.departure_time }} ({{ past_flight.flight.from_airport }}) -> {{ past_flight.flight.arrival_time }} ({{ past_flight.flight.to_airport }})</p>
+                        </div>
+
+                    </div></a>
+
+                </div>
+                 {% endfor %}
+            </div>
+    </div>
+</div>>
+</section>
+</body>
+{% endblock %}
+</html>
