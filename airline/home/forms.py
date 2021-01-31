@@ -23,6 +23,14 @@ class ContactForm(ModelForm):
           'text': forms.Textarea(attrs={'class': 'form-control'}),
       }
 
+class ResponseForm(ModelForm):
+   class Meta:
+      model = Feedback
+      fields = ['adminresponse']
+      widgets = {
+          'adminresponse': forms.Textarea(attrs={'class': 'form-control'}),
+      }
+
 class ChangeEmailForm(ModelForm):
    class Meta:
       model=RegisteredUser
@@ -44,3 +52,21 @@ class AddCreditCardForm(ModelForm):
          'cvv': forms.TextInput(attrs={'class': 'form-control'}),
          'cardHolderName': forms.TextInput(attrs={'class': 'form-control'}),
       }
+
+class addflight(forms.ModelForm):
+   class Meta:
+      model = Flight
+      fields = ['pnr', 'departure_time', 'arrival_time', 'departure_hour', 'arrival_hour', 'from_airport', 'to_airport', 'price']
+
+
+class addAirport(forms.ModelForm):
+   class Meta:
+      model = Airport
+      fields = ['name', 'address']
+
+
+class chooseflight(forms.ModelForm):
+   class Meta:
+      model = Flight
+      fields = ['from_airport', 'to_airport']
+      exclude = ['pnr', 'departure_time', 'arrival_time', 'departure_hour', 'arrival_hour', 'price']

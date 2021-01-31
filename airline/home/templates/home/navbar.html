@@ -33,9 +33,22 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="nav navbar-nav navbar-right " style="margin-left: 32rem !important;" ><font  size="5" color="white"><b><i>Hoşgeldin, {{user.username}}</i></b></font></a>
+    <a class="nav navbar-nav navbar-right " style="margin-left: 32rem !important;" ><font  size="5" color="white"><b><i>Welcome, {{user.username}}</i></b></font></a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown" style="margin-left: 3% !important;">
+
+
         <ul class="navbar-nav">
+        {% if requested_user_type.user_type == 'A' %}
+        <li class="nav-item active">
+                <a class="nav-link" href="{% url 'addairport' %}">Add Airports <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'response_feedback' %}" style="color:white">Response Feedbacks</a>
+            </li>
+             <li class="nav-item">
+                 <a class="nav-link" href="{% url 'logout' %}" style="color:white">Logout</a>
+             </li>
+        {% else %}
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'homepage' %}">Select Ticket <span class="sr-only">(current)</span></a>
             </li>
@@ -55,8 +68,10 @@
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                 </ul>
             </li>
-
+        {% endif %}
         </ul>
+
+
     </div>
 </nav>
 </body>

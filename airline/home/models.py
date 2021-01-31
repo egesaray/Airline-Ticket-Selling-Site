@@ -15,6 +15,7 @@ class RegisteredUser(models.Model):
     phone = models.CharField(max_length=11, null=True)
     email = models.EmailField(max_length=254)
     date_created = models.DateField(auto_now_add=True,null=True)
+    my_points = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
     def __str__(self):
         return self.first_name+" "+self.last_name
@@ -74,9 +75,10 @@ class Feedback(models.Model):
     text= models.TextField(max_length=1000, null=True)
     registereduser =models.ForeignKey(RegisteredUser,null=True,on_delete= models.CASCADE)
     adminresponse=models.TextField(max_length=1000,null=True,blank=True)
+    is_ok = models.CharField(default='N', max_length=1, null=False)
 
     def __str__(self):
-        return str(self.id) + " - " + self.registereduser.first_name + " " + self.registereduser.last_name
+        return str(self.id)
 
 
 class Airport(models.Model):
@@ -122,3 +124,17 @@ class Ticket(models.Model):
 
     def chooseclass(self):
         return self.save()
+
+
+class user_type(models.Model):
+    registereduser = models.ForeignKey(RegisteredUser, on_delete=models.SET_NULL, null=True)
+    user_type_choice = (('A', 'Admin'), ('U', 'User'))
+    user_type = models.CharField(choices=user_type_choice, max_length=100, null=True)
+
+    def __str__(self):
+        return str(self.registereduser.first_name) + ' ' + str(self.registereduser.last_name) + ' (' + str(self.user_type) + ')'
+
+    class Meta:
+        verbose_name = 'User Type'
+        verbose_name_plural = 'User Types'
+        ordering = ['user_type']

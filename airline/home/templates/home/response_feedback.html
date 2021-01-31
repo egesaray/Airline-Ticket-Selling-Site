@@ -1,0 +1,34 @@
+{% extends 'home/main.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>response</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/background.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js">
+
+</head>
+
+<body class="first-info">
+{% if requested_user_type.user_type == 'A' %}
+ <div class="container border p-5 my-5 rounded" style="background-color:#ff9f40">
+        <center><h2>Messages</h2></center>
+            <br><hr color="#ff0000"><br>
+         <form role="form" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label><b>Response:</b></label>
+                    {{form.adminresponse}}
+                </div>
+             <div class="form-group">
+                    <button class="btn btn-dark btn-block" type="submit">Submit</button>
+                </div>
+            <br><hr color="#ff0000"><br>
+         </form>
+        </div>
+{% endif %}
+</body>
+{% endblock %}

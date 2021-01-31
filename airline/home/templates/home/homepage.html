@@ -106,50 +106,160 @@ select:focus {
 }
 
 
+
+
 </style>
 
-<body class="first-info" >
-
-<div class="card shadow mb-5 bg-white rounded" style=" margin-top: 100px; " class="first-info" >
+<body class="first-info">
+{% if requested_user_type.user_type == 'A' %}
+<div class="card shadow mb-5 bg-white rounded" style=" margin-top: 100px; " class="first-info">
     <div class="card-body" style=" margin-top: 30px; ">
 
-        <p class="card-title text-center shadow mb-5 rounded" >Travel Booking Form</p>
+        <p class="card-title text-center shadow mb-5 rounded">Travel Booking Form</p>
+        <div class="icons text-center">
+            <img src="/static/images/logo.png" style="height: 70px; width: 70px; ">
+        </div>
+        <hr>
+        <center><p><font face="tahoma" size="5" color="maroon"><b>Add Flights</b></font></p></center>
+        <table class="table table-hover text-center">
+            <thead>
+            <tr>
+                <th>PNR</th>
+                <th>Departure Date</th>
+                <th>Arrival Date</th>
+                <th>Departure Airport</th>
+                <th>Arrival Airport</th>
+                <th>Base Price (Changable For Class Choices)</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <form role="form" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label><b>PNR:</b></label>
+                    {{form.pnr}}
+                </div>
+                <div class="form-group">
+                    <label><b>Departure Time:</b></label>
+                    {{form.departure_time}}
+                </div>
+                <div class="form-group">
+                    <label><b>Arrival Time:</b></label>
+                    {{form.arrival_time}}
+                </div>
+                <div class="form-group">
+                    <label><b>Departure Hour:</b></label>
+                    {{form.departure_hour}}
+                </div>
+                <div class="form-group">
+                    <label><b>Arrival Hour:</b></label>
+                    {{form.arrival_hour}}
+                </div>
+                <div class="form-group">
+                    <label><b>From Airport:</b></label>
+                    {{form.from_airport}}
+                </div>
+                <div class="form-group">
+                    <label><b>To Airport:</b></label>
+                    {{form.to_airport}}
+                </div>
+
+                <div class="form-group">
+                    <label><b>Price:</b></label>
+                    {{form.price}}
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-dark btn-block" type="submit" onclick="myfunction()"
+                            style="background-color:#ea7c1f">
+                        Save Flight
+                    </button>
+                    <script>
+            function myfunction(){
+                alert("Flight added.");
+                window.location.href = "{% url 'homepage' %}"
+            }
+
+
+
+                    </script>
+                </div>
+
+
+            </form>
+            <center><p><font face="tahoma" size="5" color="maroon"><b>Available Flights</b></font></p></center>
+            <hr>
+
+            {% for i in flights %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <tr>
+                    <td>{{ i.pnr }}</td>
+                    <td>{{ i.departure_time }} / {{ i.departure_hour }}</td>
+                    <td>{{ i.arrival_time }} / {{ i.arrival_hour }}</td>
+                    <td>{{ i.from_airport }}</td>
+                    <td>{{ i.to_airport }}</td>
+                     <td>{{ i.price }}</td>
+                    <td>
+                        <a href="/cancel_flight/{{ i.id }}"><b style='font-size:15px;'>&#10006;Delete</b></a>
+                    </td>
+                </tr>
+            </form>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+
+    </div>
+</div>
+
+
+
+
+{% else %}
+<div class="card shadow mb-5 bg-white rounded" style=" margin-top: 100px; " class="first-info">
+    <div class="card-body" style=" margin-top: 30px; ">
+
+        <p class="card-title text-center shadow mb-5 rounded">Travel Booking Form</p>
         <div class="icons text-center">
             <img src="/static/images/logo.png" style="height: 70px; width: 70px; ">
         </div>
         <hr>
         <center><p><font face="tahoma" size="5" color="maroon"><b>Available Flights</b></font></p></center>
-            <table class="table table-hover text-center">
-                <thead>
+        <table class="table table-hover text-center">
+            <thead>
+            <tr>
+                <th>PNR</th>
+                <th>Departure Date</th>
+                <th>Arrival Date</th>
+                <th>Departure Airport</th>
+                <th>Arrival Airport</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in flights %}
+            <form action="" method="POST">
+                {% csrf_token %}
                 <tr>
-                    <th>PNR</th>
-                    <th>Departure Date</th>
-                    <th>Arrival Date</th>
-                    <th>Departure Airport</th>
-                    <th>Arrival Airport</th>
-                    <th></th>
+                    <td>{{ i.pnr }}</td>
+                    <td>{{ i.departure_time }} / {{ i.departure_hour }}</td>
+                    <td>{{ i.arrival_time }} / {{ i.arrival_hour }}</td>
+                    <td>{{ i.from_airport }}</td>
+                    <td>{{ i.to_airport }}</td>
+                    <td><a href="{% url 'selected_flight' i.id %}" name="choose" class="btn btn-danger" role="button">Continue</a>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for i in flights %}
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <tr>
-                        <td>{{ i.pnr }}</td>
-                        <td>{{ i.departure_time }} / {{ i.departure_hour }}</td>
-                        <td>{{ i.arrival_time }} / {{ i.arrival_hour }}</td>
-                        <td>{{ i.from_airport }}</td>
-                        <td>{{ i.to_airport }}</td>
-                        <td><a href="{% url 'selected_flight' i.id %}" name="choose" class="btn btn-danger" role="button">Continue</a></td>
-                    </tr>
-                </form>
-                {% endfor %}
-                </tbody>
-            </table>
+            </form>
+            {% endfor %}
+            </tbody>
+        </table>
         <br>
 
     </div>
 </div>
+{% endif %}
 <br><br><br><br>
 </body>
 {% endblock %}
