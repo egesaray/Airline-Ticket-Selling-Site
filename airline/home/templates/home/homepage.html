@@ -215,9 +215,9 @@ select:focus {
 </div>
 
 
-
-
 {% else %}
+
+
 <div class="card shadow mb-5 bg-white rounded" style=" margin-top: 100px; " class="first-info">
     <div class="card-body" style=" margin-top: 30px; ">
 
@@ -226,6 +226,21 @@ select:focus {
             <img src="/static/images/logo.png" style="height: 70px; width: 70px; ">
         </div>
         <hr>
+        <div class="card shadow mb-5 bg-white rounded">
+            <form method="get">
+
+                    <center><h6>Departure Time : </h6>{{ myFilter.form.departure_time }}</center>
+                    <center><small>Enter in this form YYYY-MM-DD </small></center>
+                <br>
+                <div class="row p-2 my-1">
+                    <h6>Departure Airport : </h6>{{ myFilter.form.from_airport }}
+                    <h6>Arrival Airport : </h6>{{ myFilter.form.to_airport }}
+                </div>
+                <br><br>
+                <button class="btn btn-primary btn-block" type="submit">Search</button>
+
+            </form>
+        </div>
         <center><p><font face="tahoma" size="5" color="maroon"><b>Available Flights</b></font></p></center>
         <table class="table table-hover text-center">
             <thead>

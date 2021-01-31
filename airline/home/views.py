@@ -11,7 +11,7 @@ from .decorators import unauthenticated_user
 from .forms import *
 from .models import *
 from django.contrib.auth import update_session_auth_hash
-
+from .filters import *
 # Create your views here.
 
 @unauthenticated_user
@@ -45,7 +45,7 @@ def register(request):
             last_name = request.POST['last_name']
             phone = request.POST['phone']
             email = request.POST['email']
-            registereduser = RegisteredUser(first_name=first_name, last_name=last_name, phone=phone, email=email,user=user)
+            registereduser = RegisteredUser(first_name=first_name, last_name=last_name, phone=phone, email=email,user=user, my_points=0)
             registereduser.save()
 
             new_user_type = user_type(registereduser=registereduser, user_type='U')
@@ -78,6 +78,8 @@ def homepage(request):
     registereduser = RegisteredUser.objects.get(user=user)
     requested_user_type = user_type.objects.get(registereduser=registereduser)
     flights = Flight.objects.filter(departure_time__range=[timezone.now(), "2022-01-01"])
+    myFilter = FlightFilter(request.GET , queryset=flights)
+    flights = myFilter.qs
 
     form = addflight()
     if request.method == "POST":
@@ -90,7 +92,7 @@ def homepage(request):
         return render(request, 'home/homepage.html', {'form':form, 'requested_user_type': requested_user_type, 'flights': flights})
 
 
-    return render(request, 'home/homepage.html', {'flights': flights})
+    return render(request, 'home/homepage.html', {'flights': flights , 'myFilter':myFilter})
 
 
 # @login_required
@@ -150,19 +152,21 @@ def FeedbackPage(request):
 
 @login_required
 def response_feedback(request):
-    print(id)
     user = request.user
     registereduser = RegisteredUser.objects.get(user=user)
     requested_user_type = user_type.objects.get(registereduser=registereduser)
-    form = ResponseForm(request.POST)
+    feedbacks = Feedback.objects.filter(is_ok='N')
+    firstfeedback = feedbacks.first()
+
+    form = ResponseForm(request.POST, instance=firstfeedback)
     if request.method == "POST":
         if form.is_valid():
-            form = ResponseForm(request.POST)
-            adminresponse = request.POST['adminresponse']
-            Feedback.objects.filter(id=id).update(adminresponse=adminresponse, is_ok='Y')
+            form = ResponseForm(request.POST , instance=firstfeedback)
             form.save()
-            return HttpResponseRedirect('/homepage/')
-    return render(request, 'home/response_feedback.html', {'form': form, 'requested_user_type': requested_user_type})
+
+            return HttpResponseRedirect('/response_feedback/')
+
+    return render(request, 'home/response_feedback.html', {'form': form, 'requested_user_type': requested_user_type , 'firstfeedback': firstfeedback})
 
 
 
@@ -296,6 +300,7 @@ def myflights(request):
 
 @login_required
 def checkin(request):
+
     user_id = request.user.id
     user = User.objects.get(id=user_id)
     registered_user = RegisteredUser.objects.get(user=user)
@@ -309,7 +314,7 @@ def checkin(request):
         flight = ticket.flight
         deparature_date = datetime.datetime.strptime(str(flight.departure_time) + ' ' + str(flight.departure_hour), '%Y-%m-%d %H:%M:%S')
         get_datetime_yesterday = deparature_date - datetime.timedelta(days=1)
-        if datetime.datetime.now() > get_datetime_yesterday and datetime.datetime.now() < deparature_date:
+        if datetime.datetime.now() > get_datetime_yesterday and datetime.datetime.now() < deparature_date and ticket.is_checkin == False:
                 incoming_flights.append(ticket)
 
 
@@ -375,7 +380,7 @@ def buyticket(request,values):
         return HttpResponse("Invalid request")
 
     # kredi karti onayindan sonra...
-    ticket = Ticket(trip='o',seat=selectedseats , registereduser=registered_user, ticket_class=flight_class, flight=flight, ticket_price=ticket_price, created_at=timezone.now(), is_approval='F')
+    ticket = Ticket(is_checkin=False,trip='o',seat=selectedseats , registereduser=registered_user, ticket_class=flight_class, flight=flight, ticket_price=ticket_price, created_at=timezone.now(), is_approval='F')
     ticket.save()
 
 
@@ -386,9 +391,9 @@ def buyticket(request,values):
 
         RegisteredUser.objects.update(my_points=total_point)
 
-    if request.POST.get('updateprice')=='':
-        pricess = price-my_points
-        Ticket.objects.update(ticket_price=pricess)
+    # if request.POST.get('updateprice')=='':
+    #     pricess = price-my_points
+    #     Ticket.objects.update(ticket_price=pricess)
 
     # form = AddCreditCardForm(request.POST)
     # if request.method == 'POST':

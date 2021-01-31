@@ -71,11 +71,16 @@ class Feedback(models.Model):
         ('suggestion','suggestion'),
         ('complaint','complaint')
     )
+    ISOK =(
+        ('Y','YES'),
+        ('N','NO')
+    )
     type= models.CharField(max_length=255,null=True,choices=TYPE)
     text= models.TextField(max_length=1000, null=True)
     registereduser =models.ForeignKey(RegisteredUser,null=True,on_delete= models.CASCADE)
     adminresponse=models.TextField(max_length=1000,null=True,blank=True)
-    is_ok = models.CharField(default='N', max_length=1, null=False)
+    is_ok = models.CharField(default='N', max_length=1, null=False , choices=ISOK)
+
 
     def __str__(self):
         return str(self.id)

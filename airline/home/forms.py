@@ -26,7 +26,7 @@ class ContactForm(ModelForm):
 class ResponseForm(ModelForm):
    class Meta:
       model = Feedback
-      fields = ['adminresponse']
+      fields = ['adminresponse' ,'is_ok']
       widgets = {
           'adminresponse': forms.Textarea(attrs={'class': 'form-control'}),
       }
