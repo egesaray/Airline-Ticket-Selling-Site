@@ -10,7 +10,15 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+        <script>
+            function abc(){
+            var total = '{{ use_points }}'
+            alert('You used ' + (total) + ' ışık points');
+
+            }
+        </script>
 </head>
+
 <style>
 .first-info{
     background-image: url( '/static/images/plane1.jpg' ) ;
@@ -33,6 +41,7 @@
                         <div class="carousel-item active">
                             <div style="text-align: center;">
                                 <h3>Slide to see your credit cards</h3>
+                                <i>You can not use Işık point when you use shortcut</i>
                             </div>
                         </div>
                         {% for mycreditcards in mycreditcards %}
@@ -41,7 +50,9 @@
                                 <p>{{ mycreditcards.cardName }}</p>
                                 <form role="form" action="/ticket_has_been_purchased/{{ ticket.id }}" method="POST">
                                     {% csrf_token %}
-                                    <input type="submit" value="Submit" class="btn btn-info">
+                                    <input type="hidden" name="point" value="-99"/>
+                                    <input  type="submit" value="Submit" class="btn btn-info">
+
                                 </form>
                             </div>
                         </div>
@@ -139,20 +150,22 @@
 
                                 </div>
                                 <b>Total Price:</b>{{ticket.ticket_price}}
+                                <div class="row mb-3 mt-3"> <label class="radiobtn"><input type="radio" name="point" value="{{ my_points }}">Use Işık Points : {{ my_points }} TL</label>
+                                    <label class="radiobtn"><input type="radio" name="point" value="-99">Kullanma</label> </div>
+
+
                             </div>
 
                         </div>
                         <input type="submit" value="Submit">
                     </form>
-<!--                     <form method="POST">-->
-<!--                         <input >Use Işık Points : {{ my_points }} TL</input>  &lt;!&ndash; button ekle  &ndash;&gt;-->
-<!--                    </form>-->
+
                 </div>
             </article>
         </aside>
     </div>
 </div>
-&nbsp
+&nbsp;
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

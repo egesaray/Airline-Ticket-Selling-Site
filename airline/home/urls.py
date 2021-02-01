@@ -12,15 +12,16 @@ urlpatterns = [
     path('register/', views.register, name="register"),
     path('logout/', LogoutView.as_view(next_page='home'), name="logout"),
 
-
     path('homepage/', views.homepage, name="homepage"),
     path('addairport/', views.addairport, name="addairport"),
     path('changeEmail/', views.changeEmail, name="changeEmail"),
     path('changePassword/', views.changePassword, name="changePassword"),
     path('creditcards/', views.creditcards, name="creditcards"),
     path('delete_creditcard/<int:pk>', views.delete_creditcard, name="delete_creditcard"),
+    path('delete_ticket/<int:pk>', views.delete_ticket, name="delete_ticket"),
     path('cancel_flight/<int:id>', views.cancel_flight, name="cancel_flight"),
-    path('response_feedback/', views.response_feedback, name="response_feedback"),
+    path('response_feedback/<int:id>', views.response_feedback, name="response_feedback"),
+    path('feedbacklist', views.feedbacklist , name="feedbacklist"),
 
     path('completed/', views.completed, name="completed"),
     path('myflights/', views.myflights, name="myflights"),

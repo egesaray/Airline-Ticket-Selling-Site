@@ -29,7 +29,7 @@
                             <h2 class="fonts-style ie-bold type-title display-title"><span>Incoming Flight</span></h2>
                             <p class="fonts-style text1 ie-text display-small-title">{{ incoming_flight.flight.departure_time }} / {{ incoming_flight.flight.departure_hour }}  ({{ incoming_flight.flight.from_airport }}) --> {{ incoming_flight.flight.arrival_time }} / {{incoming_flight.flight.arrival_hour}} ({{ incoming_flight.flight.to_airport }}) </p>
                         </div>
-                        <a href="/cancel_ticket/{{ incoming_flight.id }}"><b style='font-size:15px;'>&#10006;Cancel Ticket</b></a>
+                        <a href="/delete_ticket/{{ incoming_flight.id }}"><b style='font-size:15px;'>&#10006;Cancel Ticket</b></a>
 
                     </div></a>
 

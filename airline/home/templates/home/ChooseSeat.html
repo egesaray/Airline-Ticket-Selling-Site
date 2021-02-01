@@ -24,23 +24,19 @@
                             <div class="form-group">
                                 <label><span class="hidden-xs"></span> </label>
                                 <div class="form-inline">
+                                    {% if flight_class == "economy" %}
                                     <select class="form-control" style="width:45%"  id="Arow" name="Arow" form="chooseseatform">
+
                                         <option value="A">A</option>
                                         <option value="B">B</option>
                                         <option value="C">C</option>
                                         <option value="D">D</option>
                                         <option value="E">E</option>
                                         <option value="F">F</option>
+
                                     </select>
                                     <span style="width:10%; text-align: center"> <h2>/</h2> </span>
                                     <select class="form-control" style="width:45%" id="Acolumn" name="Acolumn" form="chooseseatform">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
                                         <option value="10">10</option>
                                         <option value="15">15</option>
                                         <option value="16">16</option>
@@ -61,6 +57,51 @@
                                         <option value="31">31</option>
                                         <option value="32">32</option>
                                     </select>
+                                    {% endif %}
+                                    {% if flight_class == "business" %}
+                                     <select class="form-control" style="width:45%"  id="Arow" name="Arow" form="chooseseatform">
+
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                        <option value="E">E</option>
+                                        <option value="F">F</option>
+
+                                    </select>
+                                    <span style="width:10%; text-align: center"> <h2>/</h2> </span>
+                                    <select class="form-control" style="width:45%" id="Acolumn" name="Acolumn" form="chooseseatform">
+
+
+
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+
+
+
+                                    </select>
+                                    {% endif %}
+                                    {% if flight_class == "first" %}
+                                    <select class="form-control" style="width:45%"  id="Arow" name="Arow" form="chooseseatform">
+
+                                        <option value="A">A</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                        <option value="E">E</option>
+
+                                    </select>
+                                    <span style="width:10%; text-align: center"> <h2>/</h2> </span>
+                                    <select class="form-control" style="width:45%" id="Acolumn" name="Acolumn" form="chooseseatform">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+
+
+
+                                    </select>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -68,6 +109,7 @@
                     {% endfor %}
                     <input type="submit" value="Submit" class="btn btn-success btn-block">
                 </form>
+
 
 
             </div>

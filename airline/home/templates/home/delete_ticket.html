@@ -27,12 +27,12 @@
 	<div class="col-sm-4">
 		<div class="container border p-5 my-5  text-black">
 
-			<center><h5>Are you sure you want to delete your credit card "{{mycreditcard}}" ?</h5></center>
+			<center><h5>Are you sure you want to delete your ticket ?</h5></center>
 			&nbsp;
-			<form action="{% url 'delete_creditcard' mycreditcard.id  %}" method="POST">
+			<form action="{% url 'delete_ticket' ticket.id  %}" method="POST">
 				{% csrf_token %}
 				<input class="btn btn-danger btn-block" type="submit" name="Confirm" value="Delete">
-				<a class="btn btn-danger btn-block" href="{% url 'creditcards' %}">Cancel</a>
+				<a class="btn btn-danger btn-block" href="{% url 'myflights' %}">Cancel</a>
 			</form>
 		</div>
 	</div>

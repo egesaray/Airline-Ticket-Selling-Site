@@ -51,7 +51,6 @@ def register(request):
             new_user_type = user_type(registereduser=registereduser, user_type='U')
             new_user_type.save()
 
-            login(request, user)
             messages.success(request, 'Account was created for ' + username)
             return redirect('login')  # redirect user to login page when account creation is successfull
     else:
@@ -86,6 +85,18 @@ def homepage(request):
         form = addflight(request.POST)
         if form.is_valid():
             form.save()
+            # for koltuk_numarasi in range(0, 3):
+            #     s=seat(flight=form.flight_id, "A"koltuk_numarasi, N, first)
+            #     s.save()
+            #
+            # for koltuk_numarasi in range(0, 3):
+            #     new object(form.flight_id, B + koltuk_numarasi, N, first)
+            #
+            # for koltuk_numarasi in range(0, 2):
+            #     new object(form.flight_id, C + koltuk_numarasi, N, business)
+            # return
+
+
             return HttpResponseRedirect('/homepage/')
 
     if requested_user_type.user_type == 'A':
@@ -95,78 +106,52 @@ def homepage(request):
     return render(request, 'home/homepage.html', {'flights': flights , 'myFilter':myFilter})
 
 
-# @login_required
-# def FeedbackPage(request):
-#     ruser = request.user
-#     registereduser = RegisteredUser.objects.get(user=ruser)
-#     requested_user_type = user_type.objects.get(registereduser=registereduser)
-#
-#     if requested_user_type.user_type == 'A':
-#         print('seray')
-#         form2 = ResponseForm()
-#         if request.method == 'POST':
-#             if form2.is_valid():
-#                 form2 = ResponseForm(request.POST)
-#                 adminresponse = request.POST['adminresponse']
-#
-#                 response_feedback = Feedback(adminresponse=adminresponse)
-#                 response_feedback.save()
-#                 return redirect('/homepage')
-#
-#     else:
-#         form = ContactForm()
-#         if request.method == 'POST':
-#             if form.is_valid():
-#                 form = ContactForm(request.POST)
-#                 typer = request.POST['type']
-#                 textr = request.POST['text']
-#
-#                 new_feedback = Feedback(type=typer, text=textr, registereduser=ruser)
-#                 new_feedback.save()
-#                 return redirect('/homepage')
-#
-#     if requested_user_type.user_type == 'A':
-#         return render(request, 'home/Feedback.html',
-#                       {'form2': form2, 'requested_user_type': requested_user_type})
-#     else:
-#         return render(request, 'home/Feedback.html', {'form': form, 'requested_user_type': requested_user_type})
-
 @login_required
 def FeedbackPage(request):
     ruser = request.user.registereduser
     feedbackresponse = Feedback.objects.filter(registereduser=ruser)
     form = ContactForm()
-    if request.method =='POST':
-        if form.is_valid():
-            form =ContactForm(request.POST)
-            typer = request.POST['type']
-            textr = request.POST['text']
 
-            new_feedback = Feedback(type=typer, text=textr, registereduser=ruser)
-            new_feedback.save()
-            return redirect('/homepage')
+    if request.method =='POST':
+        form =ContactForm(request.POST)
+        typer = request.POST.get('type')
+        textr = request.POST.get('text')
+
+        new_feedback = Feedback(type=typer, text=textr, registereduser=ruser , is_ok='NO')
+        new_feedback.save()
+        return redirect('/homepage')
 
 
     context = {'form': form, 'ruser': ruser, 'feedbackresponse': feedbackresponse}
     return render(request, 'home/Feedback.html', context)
 
 @login_required
-def response_feedback(request):
+def feedbacklist(request):
     user = request.user
     registereduser = RegisteredUser.objects.get(user=user)
     requested_user_type = user_type.objects.get(registereduser=registereduser)
-    feedbacks = Feedback.objects.filter(is_ok='N')
-    firstfeedback = feedbacks.first()
+    feedbacks = Feedback.objects.filter(is_ok='NO')
+    return render(request, 'home/feedbacklist.html', { 'feedbacks': feedbacks , 'requested_user_type':requested_user_type })
+
+
+@login_required
+def response_feedback(request , id):
+    user = request.user
+    registereduser = RegisteredUser.objects.get(user=user)
+    requested_user_type = user_type.objects.get(registereduser=registereduser)
+    firstfeedback = Feedback.objects.get(id=id)
 
     form = ResponseForm(request.POST, instance=firstfeedback)
     if request.method == "POST":
         if form.is_valid():
             form = ResponseForm(request.POST , instance=firstfeedback)
             form.save()
-
-            return HttpResponseRedirect('/response_feedback/')
+            Feedback.objects.filter(id=id).update(is_ok='YES')
+            return HttpResponseRedirect('/feedbacklist')
 
     return render(request, 'home/response_feedback.html', {'form': form, 'requested_user_type': requested_user_type , 'firstfeedback': firstfeedback})
+
+
 
 
 
@@ -188,7 +173,6 @@ def addairport(request):
             form.save()
             return HttpResponseRedirect('/homepage/')
     return render(request, 'home/addairport.html', {'form':form,'requested_user_type': requested_user_type})
-
 
 
 
@@ -256,12 +240,22 @@ def delete_creditcard(request,pk):
     context= {'mycreditcard':mycreditcard}
     return render(request, 'home/delete_creditcard.html',context)
 
+@login_required
+def delete_ticket(request,pk):
+    ticket = Ticket.objects.get(id=pk)
+    if request.method =="POST":
+        ticket.delete()
+        return redirect('/myflights')
+    context= {'ticket':ticket}
+    return render(request, 'home/delete_ticket.html',context)
 
+@login_required
+def cancel_ticket(request , id):
+    Ticket.objects.get(id=id).delete()
+    return redirect('/myflights')
 
 @login_required
 def myflights(request):
-
-
     user_id = request.user.id
     user = User.objects.get(id=user_id)
     registered_user = RegisteredUser.objects.get(user=user)
@@ -389,18 +383,7 @@ def buyticket(request,values):
     if (price > 0):
         total_point = (float(my_points) + float((ticket.ticket_price *5)/100))
 
-        RegisteredUser.objects.update(my_points=total_point)
-
-    # if request.POST.get('updateprice')=='':
-    #     pricess = price-my_points
-    #     Ticket.objects.update(ticket_price=pricess)
-
-    # form = AddCreditCardForm(request.POST)
-    # if request.method == 'POST':
-    #     if form.is_valid():
-    #         form = AddCreditCardForm(request.POST)
-
-
+    RegisteredUser.objects.filter(id=user_id).update(my_points=total_point)
     return render(request, 'home/buyticket.html', {'ticket':ticket ,'mycreditcards':mycreditcards, 'my_points':my_points})
 
 
@@ -417,6 +400,31 @@ def choose_class(request, id):
 
 @login_required
 def ticket_has_been_purchased(request, id):
+    seray = Ticket.objects.get(id=id)
+
+    point = request.POST.get('point')
+    if not point=="-99":
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+        registered_user = RegisteredUser.objects.get(user=user)
+        my_points = request.user.registereduser.my_points
+        ticket_price = seray.ticket_price
+        total_point = (float(ticket_price) - float(my_points))
+        RegisteredUser.objects.filter(user=user).update(my_points=0)
+        Ticket.objects.filter(registereduser=registered_user).update(ticket_price=total_point)  # id eşitlicez
+        seray2=float((total_point*5)/100)
+        RegisteredUser.objects.filter(user=user).update(my_points=seray2)
+
+    if point=="-99":
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+        my_points = request.user.registereduser.my_points
+        ticket_price = seray.ticket_price
+        seray2 = (float(my_points) + float(( ticket_price* 5) / 100))
+        RegisteredUser.objects.filter(user=user).update(my_points=seray2)
+        registered_user = RegisteredUser.objects.get(user=user)
+
+
     Ticket.objects.filter(id=id).update(is_approval='T')
     return redirect('/completed')
 
@@ -437,20 +445,15 @@ def view_ticket(request, id):
     namee= str(ruser.first_name) + " " + str(ruser.last_name)
     return render(request , 'home/view_ticket.html',{'ticket':ticket , 'namee':namee })
 
-@login_required
-def cancel_ticket(request , id):
-    Ticket.objects.get(id=id).delete()
-    return redirect('/myflights')
+
 
 @login_required
 def ChooseSeat(request, values):
     vals= values
-
     values = str(values).split('&')
     flight_class = values[0]
     flight_id = values[1]
     choices = values[2]
-
     values_of_choices = str(choices).split('_')
     kid = int(values_of_choices[1])
     adult = int(values_of_choices[2])
@@ -462,7 +465,6 @@ def ChooseSeat(request, values):
     for i in range(0,total):
         count.append(i)
 
-
-    return render(request,'home/ChooseSeat.html' ,  {'vals':vals ,'count':count  })
+    return render(request,'home/ChooseSeat.html' ,  {'vals':vals ,'count':count, 'flight_class':flight_class })
 
 

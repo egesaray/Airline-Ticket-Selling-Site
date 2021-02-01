@@ -13,33 +13,37 @@
 </head>
 
 <body class="first-info">
+
 {% if requested_user_type.user_type == 'A' %}
 <div class="container border p-5 my-5 rounded" style="background-color:#ff9f40">
-    <center><h2>Messages</h2></center>
-    <br>
-    <hr color="#ff0000">
-    <br>
-    <b> Author : </b> {{ firstfeedback.registereduser }}
-    <br>
-    <b>{{ firstfeedback.type }}</b>
-    <br>
-    <p>{{ firstfeedback.text }}</p>
-    <br>
 
-    <br><br>
-    <form role="form" method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label><b>Response:</b></label>
-            {{form.adminresponse}}
-        </div>
-        <div class="form-group">
-            <button class="btn btn-dark btn-block" type="submit">Submit</button>
-        </div>
-        <br>
-        <hr color="#ff0000">
-        <br>
-    </form>
+
+    <center><p><font face="tahoma" size="5" color="maroon"><b>Feedbacks</b></font></p></center>
+    <table class="table table-hover text-center">
+        <thead>
+        <tr>
+            <th>user id</th>
+            <th>author</th>
+            <th>type</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in feedbacks %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <tr>
+                <td>{{ i.registereduser.id }}</td>
+                <td>{{ i.registereduser }}</td>
+                <td>{{ i.type }}</td>
+                <td><a href="{% url 'response_feedback' i.id %}" name="choose" class="btn btn-danger" role="button">Respond</a>
+                </td>
+            </tr>
+        </form>
+        {% endfor %}
+        </tbody>
+    </table>
+
 </div>
 {% endif %}
 </body>

@@ -1,9 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from home.models import *
+from .models import *
 from django.forms import ModelForm
-
+from django.contrib.auth.models import User
 
 class RegistrationForm(UserCreationForm):
    first_name = forms.CharField()
@@ -26,7 +25,7 @@ class ContactForm(ModelForm):
 class ResponseForm(ModelForm):
    class Meta:
       model = Feedback
-      fields = ['adminresponse' ,'is_ok']
+      fields = ['adminresponse' ]
       widgets = {
           'adminresponse': forms.Textarea(attrs={'class': 'form-control'}),
       }

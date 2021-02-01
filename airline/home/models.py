@@ -72,14 +72,14 @@ class Feedback(models.Model):
         ('complaint','complaint')
     )
     ISOK =(
-        ('Y','YES'),
-        ('N','NO')
+        ('YES','YES'),
+        ('NO','NO')
     )
     type= models.CharField(max_length=255,null=True,choices=TYPE)
     text= models.TextField(max_length=1000, null=True)
     registereduser =models.ForeignKey(RegisteredUser,null=True,on_delete= models.CASCADE)
     adminresponse=models.TextField(max_length=1000,null=True,blank=True)
-    is_ok = models.CharField(default='N', max_length=1, null=False , choices=ISOK)
+    is_ok = models.CharField(default='NO', max_length=10, null=True , choices=ISOK)
 
 
     def __str__(self):
@@ -125,11 +125,16 @@ class Ticket(models.Model):
 
 
     def __str__(self):
-        return str(self.id) + " - " + self.registereduser.first_name + " " + self.registereduser.last_name
+        return str(self.id) + " - " + str(self.registereduser.first_name) + " " + str(self.registereduser.last_name)
 
     def chooseclass(self):
         return self.save()
 
+class seat(models.Model):
+    seat = models.CharField(max_length=255,null=True)
+    flight = models.ForeignKey(Flight, null=True, on_delete=models.CASCADE)
+    is_sold = models.CharField(max_length=1, null=True, default='N')
+    flightclass = models.CharField(max_length=255,null=True)
 
 class user_type(models.Model):
     registereduser = models.ForeignKey(RegisteredUser, on_delete=models.SET_NULL, null=True)
