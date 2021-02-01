@@ -374,9 +374,9 @@ def buyticket(request,values):
         return HttpResponse("Invalid request")
 
     # kredi karti onayindan sonra...
+
     ticket = Ticket(is_checkin=False,trip='o',seat=selectedseats , registereduser=registered_user, ticket_class=flight_class, flight=flight, ticket_price=ticket_price, created_at=timezone.now(), is_approval='F')
     ticket.save()
-
 
     my_points = request.user.registereduser.my_points
 
@@ -384,6 +384,7 @@ def buyticket(request,values):
         total_point = (float(my_points) + float((ticket.ticket_price *5)/100))
 
     RegisteredUser.objects.filter(id=user_id).update(my_points=total_point)
+
     return render(request, 'home/buyticket.html', {'ticket':ticket ,'mycreditcards':mycreditcards, 'my_points':my_points})
 
 

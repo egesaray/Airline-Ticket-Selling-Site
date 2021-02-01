@@ -7,6 +7,10 @@
 
 		<link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/background.css' %}">
+            <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
 </head>
 
@@ -28,8 +32,8 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                    </form></center>
 
-                <center> <p>Don't have an account?  <a href="{% url 'register' %}"><button class="button" ><span>Register</span></button></a></p> </center>
-
+                <center> <p>Don't have an account?         <br> <a href="{% url 'register' %}"><button class="btn btn-danger" ><span>Register</span></button></a></p> </center>
+                <center> <p>Did you forgot your password?   <a href="{% url 'reset_password' %}"><button class="btn btn-danger" ><span>Reset</span></button></a></p> </center>
                  </div>
              </div>
         </div>
