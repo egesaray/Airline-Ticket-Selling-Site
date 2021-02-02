@@ -17,8 +17,13 @@
 
 
                 <form role="form" action="/buyticket/{{ vals }}" method="POST" id="chooseseatform" , name="chooseseatform">
-                    {% for i in count %}
                     {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <p> karışmaz mı</p>
+                    {% for i in count %}
+
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -27,7 +32,7 @@
                                     {% if flight_class == "economy" %}
                                     <select class="form-control" style="width:45%"  id="Arow" name="Arow" form="chooseseatform">
 
-                                        <option value="A">A</option>
+                                        <option value="A">A-1</option>
                                         <option value="B">B</option>
                                         <option value="C">C</option>
                                         <option value="D">D</option>

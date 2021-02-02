@@ -69,3 +69,15 @@ class chooseflight(forms.ModelForm):
       model = Flight
       fields = ['from_airport', 'to_airport']
       exclude = ['pnr', 'departure_time', 'arrival_time', 'departure_hour', 'arrival_hour', 'price']
+
+
+
+class SeatSelection(forms.ModelForm):
+      class Meta:
+         model = Aseat
+         fields = ['seat' , 'passangerName' , 'passangerTC']
+
+
+
+
+

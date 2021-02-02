@@ -112,18 +112,14 @@ select:focus {
 <body class="first-info" >
 <div class="card shadow mb-5 bg-white rounded text-center" style=" margin-top: 100px; " >
 
-        <div class="row mb-3 mt-3">
-            {% if ticket.trip == 'o' %}
-            <label class="radiobtn"><input type="radio" name="gender" checked value="male">One Way</label>
-            {% else %}
-            <label class="radiobtn"><input type="radio" name="gender" checked value="male">Round Trip</label>
-            {% endif %}
-        </div>
+
         <div class="row">
             <div class="col-sm-6">
+                <br><br>
                 <h5>Name:</h5><p>{{ namee }} </p>
             </div>
             <div class="col-sm-6">
+                <br><br>
                 <h5>Seat:</h5><p>{{ ticket.seat }} </p>
             </div>
         </div>
@@ -142,6 +138,7 @@ select:focus {
         </div>
         <hr>
         <b>Total Price:</b>  {{ticket.ticket_price}}
+    <br><br>
 
 </div>
 <br><br><br><br>

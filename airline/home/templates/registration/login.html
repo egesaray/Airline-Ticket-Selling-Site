@@ -16,11 +16,11 @@
 
 <body class="row first-info">
 <div class="container">
-        <div class="row main">
+        <div class="row main ">
             <div class="main login main-center">
 <center><p><font face="tahoma" size="4" color="maroon"><b>LOGIN</b></font></p></center>
 
-            <div class="card-body">
+            <div class="card-body p-3 my-3">
                <center> <form method="POST">
                     {% csrf_token %}
                     {{ form.as_p }}
@@ -32,8 +32,8 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                    </form></center>
 
-                <center> <p>Don't have an account?         <br> <a href="{% url 'register' %}"><button class="btn btn-danger" ><span>Register</span></button></a></p> </center>
-                <center> <p>Did you forgot your password?   <a href="{% url 'reset_password' %}"><button class="btn btn-danger" ><span>Reset</span></button></a></p> </center>
+                 <center><p>Don't have an account?         <a href="{% url 'register' %}"><button class="btn btn-danger" ><span>Register</span></button></a></p></center>
+                 <center><p>Did you forgot your password?   <a href="{% url 'reset_password' %}"><button class="btn btn-danger" ><span>Reset</span></button></a></p></center>
                  </div>
              </div>
         </div>

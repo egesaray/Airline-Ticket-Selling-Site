@@ -130,11 +130,17 @@ class Ticket(models.Model):
     def chooseclass(self):
         return self.save()
 
-class seat(models.Model):
+class Aseat(models.Model):
+
     seat = models.CharField(max_length=255,null=True)
+    passangerName= models.CharField(max_length=255 , null=True , blank=True)
+    passangerTC = models.DecimalField(max_digits=11,decimal_places=0,null=True , blank=True)
     flight = models.ForeignKey(Flight, null=True, on_delete=models.CASCADE)
     is_sold = models.CharField(max_length=1, null=True, default='N')
     flightclass = models.CharField(max_length=255,null=True)
+
+    def __str__(self):
+        return str(self.id)
 
 class user_type(models.Model):
     registereduser = models.ForeignKey(RegisteredUser, on_delete=models.SET_NULL, null=True)

@@ -12,7 +12,7 @@ admin.site.register(Flight)
 admin.site.register(Airport)
 admin.site.register(RegisteredUser)
 admin.site.register(user_type)
-admin.site.register(seat)
+admin.site.register(Aseat)
 
 #
 # admin.site.register(user)
