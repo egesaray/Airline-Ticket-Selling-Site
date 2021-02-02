@@ -7,8 +7,10 @@
     <title>View Flight</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/background.css' %}">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
 
 </head>
@@ -107,39 +109,138 @@ select:focus {
 }
 
 
+.dotted-line {
+    border: 1px dashed #fff
+}
+
+.container{
+    max-width: 800px;
+}
+
+
 </style>
 
-<body class="first-info" >
-<div class="card shadow mb-5 bg-white rounded text-center" style=" margin-top: 100px; " >
+<body class="first-info">
 
+<div class="container p-3 my-3">
 
-        <div class="row">
-            <div class="col-sm-6">
-                <br><br>
-                <h5>Name:</h5><p>{{ namee }} </p>
+    <div style="background: #8E24AA">
+        <div class="row ">
+            <div class="col-sm-4 justify-content-between align-items-center text-center my-3">
+
+                <h2>{{ ticket.flight.from_airport }}</h2><br>
+                <span>{{ ticket.flight.departure_time }}</span><br>
+                <span>{{ ticket.flight.departure_hour }}</span>
             </div>
-            <div class="col-sm-6">
-                <br><br>
-                <h5>Seat:</h5><p>{{ ticket.seat }} </p>
+            <div class="col-sm-4 justify-content-center text-center my-3"><i class="fa fa-plane fa-5x"></i></div>
+            <div class="col-sm-4 justify-content-between align-items-center text-center my-3">
+                <h2>{{ ticket.flight.to_airport }}</h2><br>
+                <span>{{ ticket.flight.arrival_time }}</span><br>
+                <span>{{ ticket.flight.arrival_hour }}</span>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <h5>Departure Airport:</h5><p>{{ ticket.flight.from_airport }} </p>
+    </div>
+
+    <div class="bg-danger text-white">
+        <div class=" row justify-content-between text-center ">
+            <div class="col-sm-3 ">
+                <span class="font-weight-bold">Flight</span><br>
+                <span>NJ-045</span>
             </div>
-            <div class="col-sm-6">
-                <h5>Arrival Airport:</h5><p>{{ ticket.flight.to_airport }} </p>
+            <div class="col-sm-3 ">
+                <span class="font-weight-bold">Gate</span><br>
+                <span>12</span>
+            </div>
+            <div class="col-sm-3 ">
+                <span class="font-weight-bold">Terminal</span><br>
+                <span>B</span>
+            </div>
+            <div class="col-sm-3">
+                <span class="font-weight-bold">Boarding Time</span><br>
+                <span>7:00 AM</span>
             </div>
         </div>
+        {% for i in passangers %}
+        <hr class="dotted-line">
+        <div class="row justify-content-between text-center ">
+            <div class=" col sm-3">
+                <span class="font-weight-bold">Passenger</span><br>
+                <span>{{ i.passangerName }}</span>
+            </div>
+            <div class="col-sm-3">
+                <span class="font-weight-bold">Identity Number</span><br>
+                <span>{{ i.passangerTC }} </span>
+            </div>
+            <div class="col-sm-3">
+                <span class="font-weight-bold">Seat</span><br>
+                <span>{{ i.seat }} </span>
+            </div>
+            <div class="col-sm-3 justify-content-between">
+                <img class="img-fluid" style="width: 80px;" src="https://i.imgur.com/DlgOLIW.png">
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+</div>
 
+
+<div class="row">
+    <div class="card shadow mb-5 bg-white rounded text-center" style=" margin-top: 100px; ">
         <div class="row">
-            <div class="col-sm-6"><hr><h5>Departure date:</h5><p>{{ ticket.flight.departure_time }}  /  {{ ticket.flight.departure_hour }}</p></div>
-            <div class="col-sm-6"><hr><h5>Arrival date:</h5><p>{{ ticket.flight.arrival_time }}  /  {{ ticket.flight.arrival_hour }}</p></div>
+            <div class="col-sm-12">
+                <br><br>
+                <h5>User:</h5>
+                <p>{{ namee }} </p>
+            </div>
         </div>
         <hr>
-        <b>Total Price:</b>  {{ticket.ticket_price}}
-    <br><br>
+        <div class="row">
+            {% for i in passangers %}
+            <div class="col-sm-4">
+                <br>
+                <h6>Passanger:</h6>
+                <p>{{ i.passangerName }} </p>
+            </div>
+            <div class="col-sm-4">
+                <br>
+                <h6>Identity Number:</h6>
+                <p>{{ i.passangerTC }} </p>
+            </div>
+            <div class="col-sm-4">
+                <br>
+                <h6>Seat:</h6>
+                <p>{{ i.seat }} </p>
+            </div>
+            {% endfor %}
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-6">
+                <h5>Departure Airport:</h5>
+                <p>{{ ticket.flight.from_airport }} </p>
+            </div>
+            <div class="col-sm-6">
+                <h5>Arrival Airport:</h5>
+                <p>{{ ticket.flight.to_airport }} </p>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-sm-6">
+                <hr>
+                <h5>Departure date:</h5>
+                <p>{{ ticket.flight.departure_time }} / {{ ticket.flight.departure_hour }}</p></div>
+            <div class="col-sm-6">
+                <hr>
+                <h5>Arrival date:</h5>
+                <p>{{ ticket.flight.arrival_time }} / {{ ticket.flight.arrival_hour }}</p></div>
+        </div>
+        <hr>
+        <b>Total Price:</b> {{ticket.ticket_price}}
+        <br><br>
+
+    </div>
 </div>
 <br><br><br><br>
 </body>

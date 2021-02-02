@@ -111,10 +111,10 @@ class Flight(models.Model):
         return self.departure_time
 
 
+
 class Ticket(models.Model):
     trip_choice = (('o','oneway'),('r','roundtrip'),)
     trip = models.CharField(max_length=5, choices=trip_choice)
-    seat = models.CharField(max_length=255,null=True)
     registereduser =models.ForeignKey(RegisteredUser,null=True,on_delete= models.CASCADE)
     ticket_class = models.CharField(max_length=255,null=True)
     flight = models.ForeignKey(Flight,null=True,on_delete=models.CASCADE)
@@ -130,6 +130,7 @@ class Ticket(models.Model):
     def chooseclass(self):
         return self.save()
 
+
 class Aseat(models.Model):
 
     seat = models.CharField(max_length=255,null=True)
@@ -138,6 +139,7 @@ class Aseat(models.Model):
     flight = models.ForeignKey(Flight, null=True, on_delete=models.CASCADE)
     is_sold = models.CharField(max_length=1, null=True, default='N')
     flightclass = models.CharField(max_length=255,null=True)
+    pticket=models.ForeignKey(Ticket,null=True,on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)

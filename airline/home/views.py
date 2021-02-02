@@ -436,7 +436,7 @@ def buyticket(request,values):
     # kredi karti onayindan sonra...
 
 
-    ticket = Ticket(is_checkin=False,trip='o',seat=selectedseats , registereduser=registered_user, ticket_class=flight_class, flight=flight, ticket_price=ticket_price, created_at=timezone.now(), is_approval='F')
+    ticket = Ticket(is_checkin=False,trip='o', registereduser=registered_user, ticket_class=flight_class, flight=flight, ticket_price=ticket_price, created_at=timezone.now(), is_approval='F')
     ticket.save()
 
     my_points = request.user.registereduser.my_points
@@ -455,11 +455,12 @@ def buyticket(request,values):
         tc = request.POST.get( str(i) + 'tc')
 
         FF = Flight.objects.get(id = flight_id)
-        Aseat.objects.filter(flight=FF,seat=selectedseat).update(is_sold='Y', passangerName=name, passangerTC=tc)
+
+        Aseat.objects.filter(flight=FF, seat=selectedseat).update(is_sold='Y', passangerName=name, passangerTC=tc ,pticket=ticket)
+
 
 
     return render(request, 'home/buyticket.html', {'ticket':ticket ,'mycreditcards':mycreditcards, 'my_points':my_points})
-
 
 
 @login_required
@@ -471,6 +472,7 @@ def choose_class(request, id):
     senior = request.POST.get('senior')
     choices = "ch_" + str(kid) + "_" + str(adult) + "_" + str(senior)
     return render(request,url,{'context':context, 'choices' : choices})
+
 
 @login_required
 def ticket_has_been_purchased(request, id):
@@ -515,9 +517,10 @@ def selected_flight(request, flight_id):
 @login_required
 def view_ticket(request, id):
     ticket = Ticket.objects.get(id=id)
+    passangers = Aseat.objects.filter(pticket=ticket)
     ruser = request.user.registereduser
     namee= str(ruser.first_name) + " " + str(ruser.last_name)
-    return render(request , 'home/view_ticket.html',{'ticket':ticket , 'namee':namee })
+    return render(request , 'home/view_ticket.html',{'ticket':ticket , 'namee':namee  , 'passangers':passangers})
 
 
 
