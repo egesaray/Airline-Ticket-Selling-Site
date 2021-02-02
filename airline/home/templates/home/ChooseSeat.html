@@ -14,104 +14,65 @@
 <div class="container shadow my-5 p-5 mb-5 bg-white rounded">
     <div class=" row">
             <div class="card-body p-5">
-
-
-                <form role="form" action="/buyticket/{{ vals }}" method="POST" id="chooseseatform" , name="chooseseatform">
+                <form action="/buyticket/{{ vals }}" method="POST">
                     {% csrf_token %}
-                    {{ form.as_p }}
 
-                    <p> karışmaz mı</p>
+
                     {% for i in count %}
-
-
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label><span class="hidden-xs"></span> </label>
                                 <div class="form-inline">
                                     {% if flight_class == "economy" %}
-                                    <select class="form-control" style="width:45%"  id="Arow" name="Arow" form="chooseseatform">
 
-                                        <option value="A">A-1</option>
-                                        <option value="B">B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
-                                        <option value="E">E</option>
-                                        <option value="F">F</option>
-
+                                    <select class="form-control" style="width:45%" name="{{i}}selectedseat" id="selectedseat">
+                                        {% for i in ecoseats %}
+                                        <option value="{{ i.seat }}">{{ i.seat }}</option>
+                                        {% endfor %}
                                     </select>
                                     <span style="width:10%; text-align: center"> <h2>/</h2> </span>
-                                    <select class="form-control" style="width:45%" id="Acolumn" name="Acolumn" form="chooseseatform">
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
-                                        <option value="24">24</option>
-                                        <option value="25">25</option>
-                                        <option value="26">26</option>
-                                        <option value="27">27</option>
-                                        <option value="28">28</option>
-                                        <option value="29">29</option>
-                                        <option value="30">30</option>
-                                        <option value="31">31</option>
-                                        <option value="32">32</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="{{i}}name" placeholder="Traveler Name">
+                                    <input type="text" class="form-control" name="{{i}}tc" placeholder="Traveler TC">
+
                                     {% endif %}
+
+
+
                                     {% if flight_class == "business" %}
-                                     <select class="form-control" style="width:45%"  id="Arow" name="Arow" form="chooseseatform">
 
-                                        <option value="A">A</option>
-                                        <option value="B">B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
-                                        <option value="E">E</option>
-                                        <option value="F">F</option>
-
+                                    <select class="form-control" style="width:45%" name="selectedseat" id="selectedseat">
+                                        {% for i in busiseats %}
+                                        <option value="{{ i.seat }}">{{ i.seat }}</option>
+                                        {% endfor %}
                                     </select>
                                     <span style="width:10%; text-align: center"> <h2>/</h2> </span>
-                                    <select class="form-control" style="width:45%" id="Acolumn" name="Acolumn" form="chooseseatform">
+                                    <input type="text" class="form-control" name="name" placeholder="Traveler Name">
+                                    <input type="text" class="form-control" name="tc" placeholder="Traveler TC">
 
 
 
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-
-
-
-                                    </select>
                                     {% endif %}
+
                                     {% if flight_class == "first" %}
-                                    <select class="form-control" style="width:45%"  id="Arow" name="Arow" form="chooseseatform">
 
-                                        <option value="A">A</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
-                                        <option value="E">E</option>
-
+                                    <select class="form-control" style="width:45%" name="selectedseat" id="selectedseat">
+                                        {% for i in firstseats %}
+                                        <option value="{{ i.seat }}">{{ i.seat }}</option>
+                                        {% endfor %}
                                     </select>
                                     <span style="width:10%; text-align: center"> <h2>/</h2> </span>
-                                    <select class="form-control" style="width:45%" id="Acolumn" name="Acolumn" form="chooseseatform">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                    <input type="text" class="form-control" name="name" placeholder="Traveler Name">
+                                    <input type="text" class="form-control" name="tc" placeholder="Traveler TC">
 
-
-
-                                    </select>
                                     {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
+
+
                     <input type="submit" value="Submit" class="btn btn-success btn-block">
                 </form>
 

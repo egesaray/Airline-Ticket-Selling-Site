@@ -397,6 +397,7 @@ def buyticket(request,values):
     kid = int(values_of_choices[1])
     adult = int(values_of_choices[2])
     senior = int(values_of_choices[3])
+    total = kid+adult+senior
 
 
     flight = Flight.objects.get(id=flight_id)
@@ -444,6 +445,18 @@ def buyticket(request,values):
         total_point = (float(my_points) + float((ticket.ticket_price *5)/100))
 
     RegisteredUser.objects.filter(id=user_id).update(my_points=total_point)
+
+
+    for i in range(0,total):
+        selectedseat = request.POST.get(str(i)+'selectedseat')
+        print(selectedseat)
+
+        name = request.POST.get( str(i) + 'name')
+        tc = request.POST.get( str(i) + 'tc')
+
+        FF = Flight.objects.get(id = flight_id)
+        Aseat.objects.filter(flight=FF,seat=selectedseat).update(is_sold='Y', passangerName=name, passangerTC=tc)
+
 
     return render(request, 'home/buyticket.html', {'ticket':ticket ,'mycreditcards':mycreditcards, 'my_points':my_points})
 
@@ -526,23 +539,42 @@ def ChooseSeat(request, values):
     for i in range(0,total):
         count.append(i)
 
-
     form = SeatSelection(request.POST)
     if request.method == 'POST':
-        form = SeatSelection(request.POST)
-        if form.is_valid():
-            seat = request.POST['seat']
+        print("get")
+        arow =request.POST.get('Arow')
+        print(arow)
+
+        '''if form.is_valid():
+            seat = form.cleaned_data['seat']
+            print(seat)
             passangerName = request.POST['passangerName']
+            print(passangerName)
             passangerTC = request.POST['passangerTC']
 
             FF = Flight.objects.filter(id = flight_id)
 
             Aseat.object.filter(flight=FF , seat =seat).update(is_sold='Y' ,passangerName=passangerName ,passangerTC=passangerTC)
+        else:
+            seat = form.cleaned_data['seat']
+            seat = request.POST.get('seat')
+            print(seat)
+            print("mera")
+            '''
+    else:
+        # seat = form.cleaned_data['seat']
+        print("post değil")
 
+    FF = Flight.objects.get(id=flight_id)
+    heyseats = Aseat.objects.filter(flight=FF, is_sold='N')
+    ecoseats = heyseats.filter(flightclass='economy')
+    busiseats = heyseats.filter(flightclass='Business')
+    firstseats = heyseats.filter(flightclass='first')
 
+    # heyseats = Aseat.objects.get(flight_id=request.flight_id, is_sold='N')
+    print(count)
+    print(i)
 
-
-
-    return render(request,'home/ChooseSeat.html' ,  {'vals':vals ,'count':count, 'flight_class':flight_class  , 'form': form})
+    return render(request,'home/ChooseSeat.html' ,  { 'firstseats':firstseats ,'busiseats':busiseats ,'ecoseats':ecoseats, 'vals':vals ,'count':count, 'flight_class':flight_class , 'form':form  ,'heyseats':heyseats})
 
 
