@@ -1,0 +1,131 @@
+{% extends 'home/main.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Completed</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/background.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js">
+
+     <meta http-equiv="refresh" content="1;URL=/view_ticket/{{ tt.id }}">
+</head>
+<style>
+.card {
+    margin: auto;
+    border: solid 1px #dbdad7;
+    width: 60%;
+    padding-left: 10px !important;
+    padding-bottom: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 0px !important
+}
+
+.card-title {
+    margin: auto;
+    padding: 15px;
+    background-color: #2f7fad;
+    color: white;
+    width: 80%
+}
+
+div.card-body {
+    padding: 0px
+}
+
+.custom-select {
+    width: 100%
+}
+
+.btn2 {
+    margin-left: 10%
+}
+
+input {
+    outline: 0 !important;
+    border-width: 0 0 2px !important;
+    border-color: #d1d1cf !important
+}
+
+input:focus {
+    border-color: #d1d1cf !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important
+}
+
+select {
+    outline: 0 !important;
+    border-width: 0 0 2px !important;
+    border-color: #d1d1cf !important
+}
+
+select:focus {
+    border-color: #d1d1cf !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important
+}
+
+.radiobtn {
+    margin-left: 3.5%
+}
+
+.icons {
+    margin: auto !important
+}
+
+.fa {
+    border-radius: 25px;
+    width: 10%;
+    margin-left: 5%;
+    border: solid 2px #dbdad7;
+    margin-top: 5%;
+    text-align: center
+}
+
+
+@media only screen and (max-width: 600px) {
+    .card {
+        margin: auto;
+        border: solid 1px #dbdad7;
+        width: 90%;
+        padding-left: 10px !important;
+        padding-bottom: 10px !important;
+        padding-right: 10px !important;
+        padding-top: 0px !important
+    }
+
+    .fa {
+        border-radius: 25px;
+        width: 15%;
+        margin-left: 5%;
+        border: solid 2px #dbdad7;
+        margin-top: 5%;
+        text-align: center
+    }
+}
+
+
+</style>
+
+<body class="first-info" >
+
+
+<div class="card shadow mb-5 bg-white rounded" style=" margin-top: 100px; " class="first-info" >
+    <div class="card-body" style=" margin-top: 30px; ">
+        <div class="icons text-center">
+            <img src="/static/images/logo.png" style="height: 70px; width: 70px; ">
+        </div>
+        <hr>
+        <center><p><font face="tahoma" size="5" color="maroon"><b>Your payment has been received</b></font></p></center>
+
+        <center><p><font face="tahoma" size="5" color="maroon"><b>You are being redirected to the my flights page</b></font></p></center>
+
+        <br>
+    </div>
+</div>
+
+<br><br><br><br>
+</body>
+{% endblock %}

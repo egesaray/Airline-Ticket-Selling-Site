@@ -122,6 +122,8 @@ class Ticket(models.Model):
     created_at = models.CharField(max_length=255,null=True)
     is_approval = models.CharField(max_length=1, null=True)
     is_checkin = models.BooleanField(null=True, blank=True)
+    terminal= models.CharField(max_length=1 , null=True, blank=True)
+    gate = models.IntegerField(null=True, blank=True)
 
 
     def __str__(self):
@@ -142,7 +144,7 @@ class Aseat(models.Model):
     pticket=models.ForeignKey(Ticket,null=True,on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.id) + self.seat
 
 class user_type(models.Model):
     registereduser = models.ForeignKey(RegisteredUser, on_delete=models.SET_NULL, null=True)

@@ -32,7 +32,6 @@ urlpatterns = [
     path('view_ticket/<int:id>', views.view_ticket, name="view_ticket"),
     path('cancel_ticket/<int:id>', views.cancel_ticket, name="cancel_ticket"),
 
-
     path('checkin/', views.checkin, name="checkin"),
     path('FeedbackPage/', views.FeedbackPage, name="FeedbackPage"),
 

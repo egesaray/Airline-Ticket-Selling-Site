@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import PasswordChangeForm
@@ -87,71 +88,71 @@ def homepage(request):
             form.save()
             lastflight = Flight.objects.last()
 
-            for koltuk_numarasi in range(0, 3):
+            for koltuk_numarasi in range(1, 4):
                 s=Aseat(flight=lastflight ,seat =("A-")+ str(koltuk_numarasi), is_sold= "N", flightclass ="first")
                 s.save()
 
-            for koltuk_numarasi in range(0, 3):
+            for koltuk_numarasi in range(1, 4):
                 s=Aseat(flight=lastflight,seat =("C-")+ str(koltuk_numarasi), is_sold= "N", flightclass ="first")
                 s.save()
 
-            for koltuk_numarasi in range(0, 3):
+            for koltuk_numarasi in range(1, 4):
                 s = Aseat(flight=lastflight, seat=("D-") + str(koltuk_numarasi), is_sold="N", flightclass="first")
                 s.save()
 
-            for koltuk_numarasi in range(0, 3):
+            for koltuk_numarasi in range(1, 4):
                 s = Aseat(flight=lastflight, seat=("F-") + str(koltuk_numarasi), is_sold="N", flightclass="first")
                 s.save()
 
 
 
-            for koltuk_numarasi in range(5, 9):
+            for koltuk_numarasi in range(6, 10):
                 s=Aseat(flight=lastflight,seat =("A-")+ str(koltuk_numarasi), is_sold= "N", flightclass ="Business")
                 s.save()
 
-            for koltuk_numarasi in range(5, 9):
+            for koltuk_numarasi in range(6, 10):
                 s=Aseat(flight=lastflight,seat =("B-")+ str(koltuk_numarasi), is_sold= "N", flightclass ="Business")
                 s.save()
 
-            for koltuk_numarasi in range(5, 9):
+            for koltuk_numarasi in range(6, 10):
                 s = Aseat(flight=lastflight, seat=("C-") + str(koltuk_numarasi), is_sold="N", flightclass="Business")
                 s.save()
 
-            for koltuk_numarasi in range(5, 9):
+            for koltuk_numarasi in range(6, 10):
                 s = Aseat(flight=lastflight, seat=("D-") + str(koltuk_numarasi), is_sold="N", flightclass="Business")
                 s.save()
 
-            for koltuk_numarasi in range(5, 9):
+            for koltuk_numarasi in range(6, 10):
                 s = Aseat(flight=lastflight, seat=("E-") + str(koltuk_numarasi), is_sold="N", flightclass="Business")
                 s.save()
 
-            for koltuk_numarasi in range(5, 9):
+            for koltuk_numarasi in range(6, 10):
                 s = Aseat(flight=lastflight, seat=("F-") + str(koltuk_numarasi), is_sold="N", flightclass="Business")
                 s.save()
 
 
 
-            for koltuk_numarasi in range(14, 32):
+            for koltuk_numarasi in range(15, 33):
                 s=Aseat(flight=lastflight,seat =("A-")+ str(koltuk_numarasi), is_sold= "N", flightclass ="economy")
                 s.save()
 
-            for koltuk_numarasi in range(14, 32):
+            for koltuk_numarasi in range(15, 33):
                 s=Aseat(flight=lastflight,seat =("B-")+ str(koltuk_numarasi), is_sold= "N", flightclass ="economy")
                 s.save()
 
-            for koltuk_numarasi in range(14, 32):
+            for koltuk_numarasi in range(15, 33):
                 s = Aseat(flight=lastflight, seat=("C-") +  str(koltuk_numarasi), is_sold="N", flightclass="economy")
                 s.save()
 
-            for koltuk_numarasi in range(14, 32):
+            for koltuk_numarasi in range(15, 33):
                 s = Aseat(flight=lastflight, seat=("D-") + str(koltuk_numarasi), is_sold="N", flightclass="economy")
                 s.save()
 
-            for koltuk_numarasi in range(14, 32):
+            for koltuk_numarasi in range(15, 33):
                 s = Aseat(flight=lastflight, seat=("E-") + str(koltuk_numarasi), is_sold="N", flightclass="economy")
                 s.save()
 
-            for koltuk_numarasi in range(14, 32):
+            for koltuk_numarasi in range(15, 33):
                 s = Aseat(flight=lastflight, seat=("F-") + str(koltuk_numarasi), is_sold="N", flightclass="economy")
                 s.save()
 
@@ -371,10 +372,15 @@ def checkin(request):
                 incoming_flights.append(ticket)
 
 
-    Ticket.objects.filter(registereduser=registered_user, flight=flight).update(is_checkin=True)
+    if request.method == "POST":
+        gate = random.randint(1, 40)
+        terminal = random.choice("ABCDEFGH")
+        Ticket.objects.filter(registereduser=registered_user, flight=flight).update(is_checkin=True, gate=gate,terminal=terminal)
+        return redirect('/myflights')
 
 
     return render(request, 'home/checkin.html', {'incoming_flights': incoming_flights})
+
 
 @login_required
 def buyticket(request,values):
@@ -436,6 +442,7 @@ def buyticket(request,values):
     # kredi karti onayindan sonra...
 
 
+
     ticket = Ticket(is_checkin=False,trip='o', registereduser=registered_user, ticket_class=flight_class, flight=flight, ticket_price=ticket_price, created_at=timezone.now(), is_approval='F')
     ticket.save()
 
@@ -453,6 +460,7 @@ def buyticket(request,values):
 
         name = request.POST.get( str(i) + 'name')
         tc = request.POST.get( str(i) + 'tc')
+
 
         FF = Flight.objects.get(id = flight_id)
 
@@ -518,9 +526,16 @@ def selected_flight(request, flight_id):
 def view_ticket(request, id):
     ticket = Ticket.objects.get(id=id)
     passangers = Aseat.objects.filter(pticket=ticket)
+    flight = Flight.objects.get(id = ticket.flight.id)
+
+
+
+
+
+
     ruser = request.user.registereduser
     namee= str(ruser.first_name) + " " + str(ruser.last_name)
-    return render(request , 'home/view_ticket.html',{'ticket':ticket , 'namee':namee  , 'passangers':passangers})
+    return render(request , 'home/view_ticket.html',{'ticket':ticket , 'namee':namee  , 'passangers':passangers , 'flight':flight})
 
 
 
